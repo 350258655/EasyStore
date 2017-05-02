@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ShopToolbar">
+
+        <!-- 这个format表示这个属性的取值范围。reference表示是引用类型 -->
+        <attr name="rightButtonIcon" format="reference"/>
+        <!-- 是否显示搜索框-->
+        <attr name="isShowSearchView" format="boolean"/>
+    </declare-styleable>
+</resources>
