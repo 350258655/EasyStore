@@ -8,14 +8,6 @@
     android:orientation="vertical"
     tools:context="com.shake.easystore.MainActivity">
     <!-- 显示Toolbar-->
-    <com.shake.easystore.weiget.ShopToolbar
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:isShowSearchView="true">
-
-    </com.shake.easystore.weiget.ShopToolbar>
 
     <!-- 真的布局文件？？？这里有点懵逼-->
     <FrameLayout

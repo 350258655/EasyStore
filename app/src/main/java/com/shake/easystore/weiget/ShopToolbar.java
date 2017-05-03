@@ -34,7 +34,7 @@ public class ShopToolbar extends Toolbar {
     }
 
     public ShopToolbar(Context context, AttributeSet attrs) {
-        this(context, null, 0);
+        this(context, attrs, 0);
     }
 
     public ShopToolbar(Context context, AttributeSet attrs, int defStyleAttr) {
@@ -57,10 +57,12 @@ public class ShopToolbar extends Toolbar {
 
             //是否显示搜索框
             boolean isShowSearchView = a.getBoolean(R.styleable.ShopToolbar_isShowSearchView, false);
-            //假如要显示搜索框，那就屏蔽标题
+            //假如要显示搜索框，那就屏蔽标题，否则显示标题
             if (isShowSearchView) {
                 showSearchView();
                 hideTitleView();
+            }else {
+                showTitleView();
             }
 
             //回收资源
