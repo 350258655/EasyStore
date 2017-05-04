@@ -13,7 +13,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:title="首页"
-        app:isShowSearchView="false">
+        app:isShowSearchView="true">
 
     </com.shake.easystore.weiget.ShopToolbar>
 
@@ -23,6 +23,9 @@
         android:layout_height="200dp"/>
 
 
-
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

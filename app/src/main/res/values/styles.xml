@@ -35,4 +35,18 @@
         <item name="android:singleLine">true</item>
     </style>
 
+    <!-- 横分割线-->
+    <style name="line_vertical">
+        <item name="android:background">@color/bg_color</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+    </style>
+
+    <!-- 竖分割线-->
+    <style name="line_horizontal">
+        <item name="android:background">@color/bg_color</item>
+        <item name="android:layout_width">1dp</item>
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 </resources>
