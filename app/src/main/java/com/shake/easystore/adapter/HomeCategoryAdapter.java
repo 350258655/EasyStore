@@ -104,7 +104,7 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     }
 
     /**
-     * 一个ViewHolder。其实就是每一项的封装吧
+     * 一个ViewHolder。其实就是把一个列表项中的每一个元素封装起来
      */
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 

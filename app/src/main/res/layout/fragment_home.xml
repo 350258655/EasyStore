@@ -7,15 +7,6 @@
               android:layout_height="match_parent">
 
 
-    <com.shake.easystore.weiget.ShopToolbar
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        android:minHeight="?attr/actionBarSize"
-        app:title="首页"
-        app:isShowSearchView="true">
-
-    </com.shake.easystore.weiget.ShopToolbar>
 
     <com.daimajia.slider.library.SliderLayout
         android:id="@+id/slider"
@@ -24,7 +15,7 @@
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview"
+        android:id="@+id/recyclerview_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 

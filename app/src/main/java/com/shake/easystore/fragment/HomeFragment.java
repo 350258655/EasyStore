@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
      * 初始化RecycleView
      */
     private void initRecycleView(View view) {
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_home);
 
         httpHelper.get(Contants.API.CAMPAIGN_HOME, new BaseCallback<List<HomeCampaign>>() {
             @Override
