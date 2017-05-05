@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private LayoutInflater mInflater;
-    //测试注释
+    //测试一下注释
     private FragmentTabHost mTabHost;
 
     //存放 底部元素 bean类的集合
