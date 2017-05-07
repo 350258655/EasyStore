@@ -80,7 +80,6 @@ public abstract class SpotsCallBack<T> extends BaseCallback<T> {
      */
     @Override
     public void onResponse(Response response) {
-        Log.i("TAG", "请求有结果");
         dismissDialog();
     }
 

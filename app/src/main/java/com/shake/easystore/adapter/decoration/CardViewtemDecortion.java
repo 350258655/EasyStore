@@ -1,4 +1,4 @@
-package com.shake.easystore.adapter;
+package com.shake.easystore.adapter.decoration;
 
 import android.graphics.Canvas;
 import android.graphics.Rect;

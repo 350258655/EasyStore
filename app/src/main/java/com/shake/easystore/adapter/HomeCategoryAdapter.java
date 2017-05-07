@@ -2,6 +2,7 @@ package com.shake.easystore.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -135,6 +136,8 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
          */
         @Override
         public void onClick(View v) {
+
+            Log.i("TAG", "被点击的是什么位置: "+getLayoutPosition());
             //获取被点击的那一整个部位
             HomeCampaign homeCampaign = mDatas.get(getLayoutPosition());
 

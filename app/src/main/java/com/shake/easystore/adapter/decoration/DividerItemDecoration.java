@@ -1,4 +1,4 @@
-package com.shake.easystore.adapter;
+package com.shake.easystore.adapter.decoration;
 
 import android.content.Context;
 import android.content.res.TypedArray;

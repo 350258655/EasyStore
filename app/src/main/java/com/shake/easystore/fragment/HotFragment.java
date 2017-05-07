@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cjj.MaterialRefreshLayout;
@@ -16,14 +18,16 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.shake.easystore.Contants;
 import com.shake.easystore.R;
-import com.shake.easystore.adapter.DividerItemDecoration;
-import com.shake.easystore.adapter.HotWaresAdapter;
+import com.shake.easystore.adapter.BaseAdapter;
+import com.shake.easystore.adapter.BaseViewHolder;
+import com.shake.easystore.adapter.decoration.DividerItemDecoration;
 import com.shake.easystore.bean.Page;
 import com.shake.easystore.bean.Wares;
 import com.shake.easystore.http.BaseCallback;
 import com.shake.easystore.http.OkHttpHelper;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.List;
@@ -67,8 +71,11 @@ public class HotFragment extends Fragment {
     //装载请求数据的容器
     List<Wares> mWares;
 
-    //适配器
-    private HotWaresAdapter mAdapter;
+//    //适配器
+//    private HotWaresAdapter mAdapter;
+
+
+    private BaseAdapter<Wares> adapter;
 
     private OkHttpHelper httpHelper = OkHttpHelper.getInstance();
 
@@ -189,21 +196,45 @@ public class HotFragment extends Fragment {
      */
     private void loadRecycleViewDatas() {
 
-        if(mAdapter == null){
-            mAdapter = new HotWaresAdapter(mWares,this.getContext());
+        if(adapter == null){
+            adapter = new BaseAdapter<Wares>(this.getContext(), R.layout.template_hot_wares,mWares) {
+                @Override
+                public void bindData(BaseViewHolder holder, Wares wares, int position) {
+
+                    TextView textTitle = holder.findView(R.id.text_title);
+                    TextView textPrice = holder.findView(R.id.text_price);
+                    ImageView mImageView = holder.findView(R.id.drawee_view);
+
+                    textTitle.setText(wares.getName());
+                    textPrice.setText("￥" + wares.getPrice());
+
+                    //用Picasso加载图片
+                    Picasso.with(getContext()).load(wares.getImgUrl()).into(mImageView);
+
+                }
+            };
+
+            adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    Toast.makeText(getContext(), "哪个位置被点击了:"+position, Toast.LENGTH_SHORT).show();
+                }
+            });
+
         }
+
 
         switch (currentState){
             case STATE_NORMAL:
-                mRecyclerView.setAdapter(mAdapter);
+                mRecyclerView.setAdapter(adapter);
                 break;
 
             //下拉刷新状态：删除原来的数据，替换新的数据
             case STATE_PULLDOWN:
                 //先清除数据
-                mAdapter.clearData();
+                adapter.clearData();
                 //再添加数据
-                mAdapter.addData(mWares);
+                adapter.addData(mWares);
                 //滑动到第一位
                 mRecyclerView.scrollToPosition(0);
                 //结束转动效果
@@ -214,7 +245,7 @@ public class HotFragment extends Fragment {
             case STATE_PULLUP:
                 //当前位置
                 //将数据添加到特定位置上
-                mAdapter.addData(mAdapter.getDatas().size(),mWares);
+                adapter.addData(adapter.getDatas().size(),mWares);
                 //滑动到特定位置
                 //结束加载
                 mRefreshLayout.finishRefreshLoadMore();
