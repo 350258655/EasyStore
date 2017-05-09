@@ -24,9 +24,10 @@
         <!--</shape>-->
     <!--</item>-->
 
-    <!--<item android:state_enabled="false" android:drawable="@color/red_btn_color_pressed"/>-->
-    <!--<item android:state_pressed="true" android:drawable="@color/red_btn_color_pressed"/>-->
-    <!--<item android:drawable="@color/red_btn_color_normal"/>-->
+    <item android:state_enabled="false" android:drawable="@color/red_btn_color_pressed"/>
+    <item android:state_pressed="true" android:drawable="@color/red_btn_color_pressed"/>
+    <item android:drawable="@color/red_btn_color_normal"/>
+
 
 
 </selector>

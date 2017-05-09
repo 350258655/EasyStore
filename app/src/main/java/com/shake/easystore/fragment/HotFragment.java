@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,9 +23,11 @@ import com.shake.easystore.adapter.BaseAdapter;
 import com.shake.easystore.adapter.BaseViewHolder;
 import com.shake.easystore.adapter.decoration.DividerItemDecoration;
 import com.shake.easystore.bean.Page;
+import com.shake.easystore.bean.ShoppingCart;
 import com.shake.easystore.bean.Wares;
 import com.shake.easystore.http.BaseCallback;
 import com.shake.easystore.http.OkHttpHelper;
+import com.shake.easystore.utils.CartProvider;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.squareup.picasso.Picasso;
@@ -36,15 +39,14 @@ import java.util.List;
  * Created by shake on 17-5-2.
  * <p/>
  * 热点Fragment
- *
+ * <p/>
  * 本Fragment根据 MaterialRefreshLayout 可区分为三种状态：正常状态，下拉刷新状态，上拉加载状态
- *
+ * <p/>
  * 正常状态：刚进入本页，会去请求数据，然后加载在 RecyclerView 上
- *
+ * <p/>
  * 下拉刷新状态 ：当下拉刷新的时候，先请求数据，然后删除 RecyclerView 上原来的数据，再把新数据添加进去
- *
+ * <p/>
  * 上拉加载状态 ： 当上拉加载更多数据的时候，在原来的位置上添加更多的数据进去
- *
  */
 public class HotFragment extends Fragment {
 
@@ -60,19 +62,19 @@ public class HotFragment extends Fragment {
     private int pageSize = 10;
 
     //初始化状态
-    private static final int STATE_NORMAL=0;
+    private static final int STATE_NORMAL = 0;
     //下拉状态
-    private  static final int STATE_PULLDOWN=1;
+    private static final int STATE_PULLDOWN = 1;
     //上拉状态
-    private  static final int STATE_PULLUP=2;
+    private static final int STATE_PULLUP = 2;
     //当前状态
     private int currentState = STATE_NORMAL;
 
     //装载请求数据的容器
     List<Wares> mWares;
 
-//    //适配器
-//    private HotWaresAdapter mAdapter;
+    //存储商品信息的工具类
+    CartProvider provider;
 
 
     private BaseAdapter<Wares> adapter;
@@ -86,6 +88,9 @@ public class HotFragment extends Fragment {
 
         // 用XUtils绑定
         ViewUtils.inject(this, view);
+
+        //初始化工具类
+        provider = new CartProvider(getContext());
 
         //初始化RecycleView
         initRecycleView();
@@ -125,14 +130,14 @@ public class HotFragment extends Fragment {
             @Override
             public void onRefreshLoadMore(MaterialRefreshLayout materialRefreshLayout) {
 
-                if(currPage <= totalPage){
+                if (currPage <= totalPage) {
                     currPage++;
                     //加载更多
                     currentState = STATE_PULLUP;
                     //请求网络数据
                     requestData();
 
-                }else {
+                } else {
                     mRefreshLayout.finishRefreshLoadMore();
                     Toast.makeText(HotFragment.this.getContext(), "没有更多数据了!", Toast.LENGTH_SHORT).show();
                 }
@@ -196,20 +201,33 @@ public class HotFragment extends Fragment {
      */
     private void loadRecycleViewDatas() {
 
-        if(adapter == null){
-            adapter = new BaseAdapter<Wares>(this.getContext(), R.layout.template_hot_wares,mWares) {
+        if (adapter == null) {
+            adapter = new BaseAdapter<Wares>(this.getContext(), R.layout.template_hot_wares, mWares) {
                 @Override
-                public void bindData(BaseViewHolder holder, Wares wares, int position) {
-
+                public void bindData(BaseViewHolder holder, final Wares wares, int position) {
+                    //找到View
                     TextView textTitle = holder.findView(R.id.text_title);
                     TextView textPrice = holder.findView(R.id.text_price);
                     ImageView mImageView = holder.findView(R.id.drawee_view);
+                    Button btn_tobuy = holder.findView(R.id.btn_tobuy);
 
+                    //给View设置值
                     textTitle.setText(wares.getName());
                     textPrice.setText("￥" + wares.getPrice());
-
                     //用Picasso加载图片
                     Picasso.with(getContext()).load(wares.getImgUrl()).into(mImageView);
+
+                    //设置点击事件
+                    btn_tobuy.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            //获取购物车数据
+                            ShoppingCart cart = getShoppingCartData(wares);
+                            provider.put(cart);
+                            Toast.makeText(getContext(), "已添加到购物车", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+
 
                 }
             };
@@ -217,14 +235,14 @@ public class HotFragment extends Fragment {
             adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Toast.makeText(getContext(), "哪个位置被点击了:"+position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "哪个位置被点击了:" + position, Toast.LENGTH_SHORT).show();
                 }
             });
 
         }
 
 
-        switch (currentState){
+        switch (currentState) {
             case STATE_NORMAL:
                 mRecyclerView.setAdapter(adapter);
                 break;
@@ -245,17 +263,30 @@ public class HotFragment extends Fragment {
             case STATE_PULLUP:
                 //当前位置
                 //将数据添加到特定位置上
-                adapter.addData(adapter.getDatas().size(),mWares);
+                adapter.addData(adapter.getDatas().size(), mWares);
                 //滑动到特定位置
                 //结束加载
                 mRefreshLayout.finishRefreshLoadMore();
                 break;
-
         }
 
-
-
-
-
     }
+
+    /**
+     * 获取ShoppingCart。因为父类没法强转成子类，所以只能一个个set
+     *
+     * @param wares
+     * @return
+     */
+    public ShoppingCart getShoppingCartData(Wares wares) {
+        ShoppingCart cart = new ShoppingCart();
+        cart.setId(wares.getId());
+        cart.setDescription(wares.getDescription());
+        cart.setImgUrl(wares.getImgUrl());
+        cart.setName(wares.getName());
+        cart.setPrice(wares.getPrice());
+        return cart;
+    }
+
+
 }

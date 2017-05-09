@@ -62,8 +62,21 @@
 
     <!-- 大红按钮-->
     <style name="bigRedButton" parent="@style/bigButton">
-        <item name="android:background">@drawable/bg_btn_style_red</item>
     </style>
+
+
+    <!-- 红色按钮-->
+    <style name="redButton" parent="@style/bigButton">
+        <item name="android:background">@drawable/bg_btn_style_red</item>
+
+    </style>
+
+
+    <!-- 全选的checkBox -->
+    <style name="customCheckbox" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/selector_checkbox</item>
+    </style>
+
 
 
 </resources>
