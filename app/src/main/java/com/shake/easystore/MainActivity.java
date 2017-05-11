@@ -15,7 +15,7 @@ import com.shake.easystore.bean.Tab;
 import com.shake.easystore.fragment.CartFragment;
 import com.shake.easystore.fragment.CategoryFragment;
 import com.shake.easystore.fragment.HomeFragment;
-import com.shake.easystore.fragment.HotspotFragment;
+import com.shake.easystore.fragment.HotNewFragment;
 import com.shake.easystore.fragment.MineFragment;
 import com.shake.easystore.weiget.FragmentTabHost;
 import com.shake.easystore.weiget.ShopToolbar;
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         Tab tab_home = new Tab(R.string.home, R.drawable.selector_icon_home, HomeFragment.class);
         //这里使用优化之后的HotFragment即HotspotFragment
         //Tab tab_hot = new Tab(R.string.hot, R.drawable.selector_icon_hot, HotFragment.class);
-        Tab tab_hot = new Tab(R.string.hot, R.drawable.selector_icon_hot, HotspotFragment.class);
+        Tab tab_hot = new Tab(R.string.hot, R.drawable.selector_icon_hot, HotNewFragment.class);
 
         Tab tab_category = new Tab(R.string.catagory, R.drawable.selector_icon_category, CategoryFragment.class);
         Tab tab_cart = new Tab(R.string.cart, R.drawable.selector_icon_cart, CartFragment.class);
