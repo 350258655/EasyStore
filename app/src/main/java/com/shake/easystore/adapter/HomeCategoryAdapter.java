@@ -1,8 +1,10 @@
 package com.shake.easystore.adapter;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,12 +58,12 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         mInflater = LayoutInflater.from(parent.getContext());
-        if(viewType == VIEW_TYPE_R){
+        if (viewType == VIEW_TYPE_R) {
 
-            return  new ViewHolder(mInflater.inflate(R.layout.template_home_cardview2,parent,false));
+            return new ViewHolder(mInflater.inflate(R.layout.template_home_cardview2, parent, false));
         }
 
-        return  new ViewHolder(mInflater.inflate(R.layout.template_home_cardview,parent,false));
+        return new ViewHolder(mInflater.inflate(R.layout.template_home_cardview, parent, false));
     }
 
 
@@ -98,10 +100,9 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
     @Override
     public int getItemViewType(int position) {
 
-        if(position % 2==0){
-            return  VIEW_TYPE_R;
-        }
-        else return VIEW_TYPE_L;
+        if (position % 2 == 0) {
+            return VIEW_TYPE_R;
+        } else return VIEW_TYPE_L;
     }
 
     /**
@@ -130,36 +131,62 @@ public class HomeCategoryAdapter extends RecyclerView.Adapter<HomeCategoryAdapte
         }
 
         /**
+         * 先做一个动画。然后判断是点击了那个图片
          * 假如是点击了大图片，就回调大图片bean给外面；假如是点击了小图片，就回调小图片bean给外面
          *
          * @param v
          */
         @Override
         public void onClick(View v) {
+            if (mListener != null) {
+                doAnim(v);
+            }
+        }
 
-            Log.i("TAG", "被点击的是什么位置: "+getLayoutPosition());
+
+        /**
+         * 图片翻转的动画
+         *
+         * @param v
+         */
+        private void doAnim(final View v) {
+            ObjectAnimator animator = ObjectAnimator.ofFloat(v, "rotationX", 0.0F, 360.0F).setDuration(200);
+            animator.addListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    //在动画播完之后回调是哪个图片被点击了
+                    docallback(v);
+                }
+            });
+            animator.start();
+        }
+
+        /**
+         * 回调是哪个图片被点击了
+         *
+         * @param v
+         */
+        private void docallback(View v) {
             //获取被点击的那一整个部位
             HomeCampaign homeCampaign = mDatas.get(getLayoutPosition());
+            switch (v.getId()) {
+                case R.id.imgview_big:
+                    mListener.onClick(v, homeCampaign.getCpOne());
+                    break;
 
-            //回调各个部位给外面
-            if(mListener != null){
-                switch (v.getId()) {
-                    case R.id.imgview_big:
-                        mListener.onClick(v,homeCampaign.getCpOne());
-                        break;
+                case R.id.imgview_small_top:
+                    mListener.onClick(v, homeCampaign.getCpTwo());
+                    break;
 
-                    case R.id.imgview_small_top:
-                        mListener.onClick(v,homeCampaign.getCpTwo());
-                        break;
-
-                    case R.id.imgview_small_bottom:
-                        mListener.onClick(v,homeCampaign.getCpThree());
-                        break;
-                }
+                case R.id.imgview_small_bottom:
+                    mListener.onClick(v, homeCampaign.getCpThree());
+                    break;
             }
-
         }
+
+
     }
+
 
     /**
      * 回调接口的设置。第一步，创建回调接口和方法，因为需要辨别出具体是哪个 Campaign 的操作，所以需要回调给外面知道

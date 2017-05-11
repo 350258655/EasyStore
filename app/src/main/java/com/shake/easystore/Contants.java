@@ -4,6 +4,10 @@ package com.shake.easystore;
  * Created by shake on 17-5-4.
  */
 public class Contants {
+
+
+    public static final String  COMPAINGAIN_ID="compaigin_id";
+
     public static class API{
 
         public static final String BASE_URL="http://112.124.22.238:8081/course_api/";
@@ -17,7 +21,7 @@ public class Contants {
         public static final String WARES_LIST=BASE_URL +"wares/list";
 
         public static final String CATEGORY_LIST=BASE_URL +"category/list";
-
+        public static final String WARES_CAMPAIN_LIST=BASE_URL +"wares/campaign/list";
 
     }
 

@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
  */
 public abstract class BaseCallback<T> {
 
-    Type mType;
+    public Type mType;
 
     /**
      * 将 T 转换为Type类型

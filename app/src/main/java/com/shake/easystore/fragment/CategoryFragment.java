@@ -1,13 +1,10 @@
 package com.shake.easystore.fragment;
 
 import android.os.Bundle;
-
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +23,6 @@ import com.shake.easystore.Contants;
 import com.shake.easystore.R;
 import com.shake.easystore.adapter.BaseAdapter;
 import com.shake.easystore.adapter.BaseViewHolder;
-
 import com.shake.easystore.adapter.decoration.DividerGridItemDecoration;
 import com.shake.easystore.adapter.decoration.DividerItemDecoration;
 import com.shake.easystore.bean.Banner;
@@ -288,7 +284,7 @@ public class CategoryFragment extends Fragment {
                     mWaresBaseAdapter = new BaseAdapter<Wares>(this.getContext(),R.layout.template_grid_wares,waresList) {
                         @Override
                         public void bindData(BaseViewHolder holder, Wares wares, int position) {
-                            ImageView imageView = holder.findView(R.id.imageView);
+                            ImageView imageView = holder.findView(R.id.drawee_view);
                             TextView textPrice = holder.findView(R.id.text_price);
                             TextView textTitle = holder.findView(R.id.text_title);
 

@@ -43,7 +43,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             android:text="立即购买"
+            android:minHeight="40dp"
+            android:minWidth="80dp"
+            android:background="@color/colorPrimary"
             android:layout_gravity="right|bottom"
             />
 

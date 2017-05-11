@@ -10,6 +10,7 @@
 
     <!-- 显示Toolbar-->
     <com.shake.easystore.weiget.ShopToolbar
+        android:id="@+id/shopToolbar"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"

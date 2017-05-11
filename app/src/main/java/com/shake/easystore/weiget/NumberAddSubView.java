@@ -109,14 +109,12 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
     public void onClick(View v) {
         if (v.getId() == R.id.btn_add) {
             addNum();
-            if(mOnButtonClickListener != null){
-                mOnButtonClickListener.onButtonAddClick(v,mValue);
-            }
+
         }else if(v.getId() == R.id.btn_sub){
             subNum();
-            if(mOnButtonClickListener != null){
-                mOnButtonClickListener.onButtonSubClick(v,mValue);
-            }
+        }
+        if(mOnButtonClickListener != null){
+            mOnButtonClickListener.onButtonClickResult(v,mValue);
         }
     }
 
@@ -205,9 +203,7 @@ public class NumberAddSubView extends LinearLayout implements View.OnClickListen
      * 按钮点击的回调接口
      */
     public interface OnButtonClickListener {
-        void onButtonAddClick(View view, int value);
-
-        void onButtonSubClick(View view, int value);
+        void onButtonClickResult(View view, int value);
     }
 
     /**

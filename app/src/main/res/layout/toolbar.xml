@@ -31,11 +31,14 @@
         android:visibility="gone"/>
 
     <!-- style="@android:style/Widget.Material.Toolbar.Button.Navigation" -->
-    <ImageButton
+    <!-- 背景颜色和Toolbar一样-->
+    <Button
         android:id="@+id/toolbar_rightButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
         android:layout_centerVertical="true"
         android:visibility="gone"/>
 

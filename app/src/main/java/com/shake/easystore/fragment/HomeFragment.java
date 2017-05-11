@@ -1,5 +1,6 @@
 package com.shake.easystore.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,7 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -16,8 +16,9 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.google.gson.Gson;
 import com.shake.easystore.Contants;
 import com.shake.easystore.R;
-import com.shake.easystore.adapter.decoration.CardViewtemDecortion;
+import com.shake.easystore.WareListActivity;
 import com.shake.easystore.adapter.HomeCategoryAdapter;
+import com.shake.easystore.adapter.decoration.CardViewtemDecortion;
 import com.shake.easystore.bean.Banner;
 import com.shake.easystore.bean.Campaign;
 import com.shake.easystore.bean.HomeCampaign;
@@ -128,8 +129,6 @@ public class HomeFragment extends Fragment {
         });
 
 
-
-
     }
 
     /**
@@ -142,13 +141,16 @@ public class HomeFragment extends Fragment {
         /**
          * 废弃原本传统的做法
          */
-        mAdapter = new HomeCategoryAdapter(homeCampaigns,this.getContext());
+        mAdapter = new HomeCategoryAdapter(homeCampaigns, this.getContext());
 
-        //设置监听事件
+        //设置监听事件，点击进入到商品列表
         mAdapter.setOnCampClickListener(new HomeCategoryAdapter.OnCampClickListener() {
             @Override
             public void onClick(View view, Campaign campaign) {
-                Toast.makeText(HomeFragment.this.getContext(), campaign.getTitle(), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(getContext(), WareListActivity.class);
+                intent.putExtra(Contants.COMPAINGAIN_ID, campaign.getId());
+                startActivity(intent);
             }
         });
         mRecyclerView.setAdapter(mAdapter);

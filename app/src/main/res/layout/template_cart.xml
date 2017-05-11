@@ -52,6 +52,7 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:layout_gravity="bottom"
+                app:maxValue="100"
                 app:minValue="1"/>
         </LinearLayout>
 

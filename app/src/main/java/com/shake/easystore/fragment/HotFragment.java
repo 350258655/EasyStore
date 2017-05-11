@@ -37,6 +37,9 @@ import java.util.List;
 
 /**
  * Created by shake on 17-5-2.
+ *
+ * 这是还没有经过优化的HotFragment
+ *
  * <p/>
  * 热点Fragment
  * <p/>
@@ -90,7 +93,7 @@ public class HotFragment extends Fragment {
         ViewUtils.inject(this, view);
 
         //初始化工具类
-        provider = new CartProvider(getContext());
+        provider = CartProvider.getInstance(getContext());
 
         //初始化RecycleView
         initRecycleView();
@@ -235,7 +238,7 @@ public class HotFragment extends Fragment {
             adapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
-                    Toast.makeText(getContext(), "哪个位置被点击了:" + position, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "哪个位置被点击了:" + position, Toast.LENGTH_SHORT).show();
                 }
             });
 

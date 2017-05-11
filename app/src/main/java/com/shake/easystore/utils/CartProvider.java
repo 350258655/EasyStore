@@ -23,13 +23,31 @@ public class CartProvider {
 
     public static final String CART_JSON = "cart_json";
 
-    public CartProvider(Context context) {
+
+    private static CartProvider mCartProvider;
+
+    private CartProvider(Context context) {
         this.mContext = context;
         //创建SparseArray
         mSparseArrayDatas = new SparseArray<>(10);
         //把SP中的数据，添加到这个SparseArray中。。。要添加到SparseArray中，后续增删改查才能在这个SparseArray的基础上进行
         spToSparse();
     }
+
+
+    /**
+     * 以单例模式来创建CartProvider，保证全局只有一个 CartProvider，这样才能保证数据得到同步
+     * @param context
+     * @return
+     */
+    public static CartProvider getInstance(Context context){
+        if(mCartProvider == null){
+            mCartProvider = new CartProvider(context.getApplicationContext());
+        }
+        return mCartProvider;
+    }
+
+
 
 
 
@@ -76,9 +94,9 @@ public class CartProvider {
     }
 
     /**
-     * 提供给外面的查询所有的方法 ??? 理论上应该可以这样做
+     * 提供给外面的查询所有的方法。因为一开始有把SP中的数据同步到SparseArray中，但是在后面的
      */
-    public List<ShoppingCart> getAll(){
+    public List<ShoppingCart> getAllData(){
         return sparseArrayToList();
     }
 
@@ -143,8 +161,7 @@ public class CartProvider {
         //将json数据转换为 List<ShoppingCart>
         List<ShoppingCart> carts = null;
         if (json != null) {
-            carts = JSONUtil.fromJson(json, new TypeToken<List<ShoppingCart>>() {
-            }.getType());
+            carts = JSONUtil.fromJson(json, new TypeToken<List<ShoppingCart>>(){}.getType());
         }
 
         return carts;
