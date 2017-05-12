@@ -1,5 +1,6 @@
 package com.shake.easystore.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -15,6 +16,8 @@ import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.shake.easystore.Contants;
 import com.shake.easystore.R;
+import com.shake.easystore.WareDetailActivity;
+import com.shake.easystore.adapter.BaseAdapter;
 import com.shake.easystore.adapter.HotspotAdapter;
 import com.shake.easystore.bean.Page;
 import com.shake.easystore.bean.Wares;
@@ -57,7 +60,8 @@ public class HotNewFragment extends Fragment implements Pager.OnPageListener<War
                 .setOnPageListener(this)
                 .setPageSize(20)
                 .setRefreshLayout(mRefreshLaout)
-                .build(getContext(), new TypeToken<Page<Wares>>() {}.getType());
+                .build(getContext(), new TypeToken<Page<Wares>>() {
+                }.getType());
 
         pager.request();
     }
@@ -71,8 +75,28 @@ public class HotNewFragment extends Fragment implements Pager.OnPageListener<War
             mRecyclerView.setAdapter(mAdapter);
             mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
             mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+            //设置点击事件
+            mAdapter.setOnItemClickListener(new BaseAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    //去详情页面
+                    goDetail(position);
+                }
+            });
+
         }
 
+    }
+
+    /**
+     * 跳转到详情页面
+     */
+    private void goDetail(int position) {
+        Wares wares = mAdapter.getItem(position);
+        Intent intent = new Intent(getActivity(), WareDetailActivity.class);
+        intent.putExtra(Contants.WARE,wares);
+        startActivity(intent);
     }
 
     @Override

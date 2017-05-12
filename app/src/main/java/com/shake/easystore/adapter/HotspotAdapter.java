@@ -8,7 +8,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shake.easystore.R;
-import com.shake.easystore.bean.ShoppingCart;
 import com.shake.easystore.bean.Wares;
 import com.shake.easystore.utils.CartProvider;
 import com.squareup.picasso.Picasso;
@@ -58,9 +57,7 @@ public class HotspotAdapter extends BaseAdapter<Wares> {
             btn_tobuy.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    //获取购物车数据
-                    ShoppingCart cart = getShoppingCartData(wares);
-                    mCartProvider.put(cart);
+                    mCartProvider.put(wares);
                     Toast.makeText(mContext, "已经添加到购物车！", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -70,21 +67,6 @@ public class HotspotAdapter extends BaseAdapter<Wares> {
     }
 
 
-    /**
-     * 获取ShoppingCart。因为父类没法强转成子类，所以只能一个个set
-     *
-     * @param wares
-     * @return
-     */
-    public ShoppingCart getShoppingCartData(Wares wares) {
-        ShoppingCart cart = new ShoppingCart();
-        cart.setId(wares.getId());
-        cart.setDescription(wares.getDescription());
-        cart.setImgUrl(wares.getImgUrl());
-        cart.setName(wares.getName());
-        cart.setPrice(wares.getPrice());
-        return cart;
-    }
 
     /**
      * 更新布局文件，当在商品列表中，切换显示方式的时候可以用到

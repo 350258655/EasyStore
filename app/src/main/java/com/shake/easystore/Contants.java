@@ -7,6 +7,9 @@ public class Contants {
 
 
     public static final String  COMPAINGAIN_ID="compaigin_id";
+    public static final String  WARE="ware";
+
+    public  static final String DES_KEY="Cniao5_123456";
 
     public static class API{
 
@@ -22,6 +25,7 @@ public class Contants {
 
         public static final String CATEGORY_LIST=BASE_URL +"category/list";
         public static final String WARES_CAMPAIN_LIST=BASE_URL +"wares/campaign/list";
+        public static final String WARES_DETAIL=BASE_URL +"wares/detail.html";
 
     }
 

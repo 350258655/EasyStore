@@ -5,6 +5,7 @@ import android.util.SparseArray;
 
 import com.google.gson.reflect.TypeToken;
 import com.shake.easystore.bean.ShoppingCart;
+import com.shake.easystore.bean.Wares;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,18 +38,16 @@ public class CartProvider {
 
     /**
      * 以单例模式来创建CartProvider，保证全局只有一个 CartProvider，这样才能保证数据得到同步
+     *
      * @param context
      * @return
      */
-    public static CartProvider getInstance(Context context){
-        if(mCartProvider == null){
+    public static CartProvider getInstance(Context context) {
+        if (mCartProvider == null) {
             mCartProvider = new CartProvider(context.getApplicationContext());
         }
         return mCartProvider;
     }
-
-
-
 
 
     /**
@@ -94,12 +93,22 @@ public class CartProvider {
     }
 
     /**
-     * 提供给外面的查询所有的方法。因为一开始有把SP中的数据同步到SparseArray中，但是在后面的
+     * 提供给外面的添加方法，直接添加的是Wares，在这里转换为ShoppingCart再添加
+     *
+     * @param wares
      */
-    public List<ShoppingCart> getAllData(){
-        return sparseArrayToList();
+    public void put(Wares wares) {
+        ShoppingCart cart = getShoppingCartData(wares);
+        put(cart);
     }
 
+
+    /**
+     * 提供给外面的查询所有的方法。因为一开始有把SP中的数据同步到SparseArray中，但是在后面的
+     */
+    public List<ShoppingCart> getAllData() {
+        return sparseArrayToList();
+    }
 
 
     /**
@@ -136,17 +145,13 @@ public class CartProvider {
         List<ShoppingCart> carts = getDataFromSP();
 
         //再将转存到 SparseArray中
-        if(carts != null && carts.size() > 0){
+        if (carts != null && carts.size() > 0) {
             for (ShoppingCart cart : carts) {
-                mSparseArrayDatas.put(cart.getId().intValue(),cart);
+                mSparseArrayDatas.put(cart.getId().intValue(), cart);
             }
         }
 
     }
-
-
-
-
 
 
     /**
@@ -161,10 +166,28 @@ public class CartProvider {
         //将json数据转换为 List<ShoppingCart>
         List<ShoppingCart> carts = null;
         if (json != null) {
-            carts = JSONUtil.fromJson(json, new TypeToken<List<ShoppingCart>>(){}.getType());
+            carts = JSONUtil.fromJson(json, new TypeToken<List<ShoppingCart>>() {
+            }.getType());
         }
 
         return carts;
+    }
+
+
+    /**
+     * 获取ShoppingCart。因为父类没法强转成子类，所以只能一个个set
+     *
+     * @param wares
+     * @return
+     */
+    public ShoppingCart getShoppingCartData(Wares wares) {
+        ShoppingCart cart = new ShoppingCart();
+        cart.setId(wares.getId());
+        cart.setDescription(wares.getDescription());
+        cart.setImgUrl(wares.getImgUrl());
+        cart.setName(wares.getName());
+        cart.setPrice(wares.getPrice());
+        return cart;
     }
 
 
