@@ -43,7 +43,7 @@ import java.util.List;
  * Created by shake on 17-5-2.
  * 商品分类
  */
-public class CategoryFragment extends Fragment {
+public class CategoryFragment extends BaseFragment {
 
 
     @ViewInject(R.id.recyclerview_category)
@@ -79,11 +79,11 @@ public class CategoryFragment extends Fragment {
     //二级菜单的适配器
     BaseAdapter<Wares> mWaresBaseAdapter;
 
+    /**
+     * 初始化
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_category, container, false);
-        ViewUtils.inject(this, view);
-
+    protected void init() {
         //获取一级菜单数据
         requestFirstCategoryData();
 
@@ -92,8 +92,11 @@ public class CategoryFragment extends Fragment {
 
         //初始化下拉刷新控件
         initRefreshLayout();
+    }
 
-        return view;
+    @Override
+    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_category, container, false);
     }
 
 
@@ -268,6 +271,11 @@ public class CategoryFragment extends Fragment {
 
             @Override
             public void onError(Response response, int code, Exception e) {
+
+            }
+
+            @Override
+            public void onTokenError(Response response, int code) {
 
             }
         });

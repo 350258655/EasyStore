@@ -25,7 +25,7 @@ import java.util.List;
 /**
  * 商品列表的Activity
  */
-public class WareListActivity extends Activity implements TabLayout.OnTabSelectedListener,Pager.OnPageListener<Wares>{
+public class WareListActivity extends BaseActivity implements TabLayout.OnTabSelectedListener,Pager.OnPageListener<Wares>{
 
 
     @ViewInject(R.id.tab_layout)

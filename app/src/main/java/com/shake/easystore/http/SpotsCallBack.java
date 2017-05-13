@@ -1,8 +1,12 @@
 package com.shake.easystore.http;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.shake.easystore.LoginActivity;
+import com.shake.easystore.utils.UserLocalData;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 
@@ -13,6 +17,8 @@ import dmax.dialog.SpotsDialog;
 /**
  * Created by shake on 17-5-4.
  * 这是能显示 loading 对话框的Callback
+ * <p>
+ * 修改记录 ： 添加实现父类的 onTokenError 方法
  */
 public abstract class SpotsCallBack<T> extends BaseCallback<T> {
 
@@ -83,4 +89,22 @@ public abstract class SpotsCallBack<T> extends BaseCallback<T> {
         dismissDialog();
     }
 
+    /**
+     * 当登录失效的时候，就会回调这个方法。即会重新跳转到 LoginActivity
+     *
+     * @param response
+     * @param code
+     */
+    @Override
+    public void onTokenError(Response response, int code) {
+        //提示
+        Toast.makeText(mContext, "登录失效，请重新登录", Toast.LENGTH_SHORT).show();
+
+        //重新回到登录页面
+        Intent intent = new Intent(mContext, LoginActivity.class);
+        mContext.startActivity(intent);
+
+        //清除用户数据
+        UserLocalData.clearUserAndToken();
+    }
 }

@@ -23,7 +23,7 @@ import com.shake.easystore.weiget.ShopToolbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
     private LayoutInflater mInflater;

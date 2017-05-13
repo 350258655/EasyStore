@@ -1,6 +1,7 @@
 package com.shake.easystore.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,14 +17,20 @@ import android.widget.TextView;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.shake.easystore.Contants;
 import com.shake.easystore.MainActivity;
+import com.shake.easystore.NewOrderActivity;
 import com.shake.easystore.R;
 import com.shake.easystore.adapter.BaseAdapter;
 import com.shake.easystore.adapter.CartAdapter;
 import com.shake.easystore.adapter.decoration.DividerItemDecoration;
 import com.shake.easystore.bean.ShoppingCart;
+import com.shake.easystore.bean.User;
+import com.shake.easystore.http.OkHttpHelper;
+import com.shake.easystore.http.SpotsCallBack;
 import com.shake.easystore.utils.CartProvider;
 import com.shake.easystore.weiget.ShopToolbar;
+import com.squareup.okhttp.Response;
 
 import java.util.List;
 
@@ -31,7 +38,7 @@ import java.util.List;
  * Created by shake on 17-5-2.
  * 购物车Fragment
  */
-public class CartFragment extends Fragment {
+public class CartFragment extends BaseFragment {
 
     @ViewInject(R.id.recyclerview_cart)
     private RecyclerView mRecyclerViewCart;
@@ -63,13 +70,14 @@ public class CartFragment extends Fragment {
     public static final String ACTION_CAMPLATE = "complete";
 
 
+    OkHttpHelper mOkHttpHelper = OkHttpHelper.getInstance();
+
+
+    /**
+     * 初始化
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View view = inflater.inflate(R.layout.fragment_cart, container, false);
-
-        ViewUtils.inject(this, view);
-
+    protected void init() {
         mCartProvider = CartProvider.getInstance(getContext());
 
         //初始化数据
@@ -77,8 +85,12 @@ public class CartFragment extends Fragment {
 
         //初始化事件
         initEvent();
+    }
 
-        return view;
+
+    @Override
+    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return  inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
     /**
@@ -165,6 +177,17 @@ public class CartFragment extends Fragment {
                 //mCartAdapter.checkAllOrNull(true);
                 //更新合计价格
                 showTotalPrice();
+            }
+        });
+
+
+        //下单按钮的监听事件
+        mBtnOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //跳转去订单Activity，但能进订单Activity的前提是先登录
+                Intent intent = new Intent(getContext(), NewOrderActivity.class);
+                startActivity(intent,true);
             }
         });
 

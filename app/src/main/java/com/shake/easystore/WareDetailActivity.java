@@ -22,7 +22,7 @@ import cn.sharesdk.framework.ShareSDK;
 import cn.sharesdk.onekeyshare.OnekeyShare;
 import dmax.dialog.SpotsDialog;
 
-public class WareDetailActivity extends Activity {
+public class WareDetailActivity extends BaseActivity {
 
 
     @ViewInject(R.id.webView)

@@ -11,6 +11,8 @@ import java.lang.reflect.Type;
 /**
  * Created by shake on 17-5-4.
  * 回调接口类，应用泛型，可以回调对应类型的数据。其实定义成一个接口也是可以的
+ * <p>
+ * 修改记录 ： 添加 onTokenError 方法，当登录失败的时候会触发到这个方法。这个方法交给子类去实现
  */
 public abstract class BaseCallback<T> {
 
@@ -75,5 +77,14 @@ public abstract class BaseCallback<T> {
      * @param e
      */
     public abstract void onError(Response response, int code, Exception e);
+
+
+    /**
+     * Token验证失败，状态码401,402,403 等时调用此方法
+     *
+     * @param response
+     * @param code
+     */
+    public abstract void onTokenError(Response response, int code);
 
 }

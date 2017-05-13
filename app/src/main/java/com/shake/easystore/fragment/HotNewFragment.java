@@ -29,7 +29,7 @@ import java.util.List;
  * Created by shake on 17-5-11.
  * 这是经过优化的Fragment
  */
-public class HotNewFragment extends Fragment implements Pager.OnPageListener<Wares> {
+public class HotNewFragment extends BaseFragment implements Pager.OnPageListener<Wares> {
     @ViewInject(R.id.recyclerview_hot)
     private RecyclerView mRecyclerView;
 
@@ -39,14 +39,17 @@ public class HotNewFragment extends Fragment implements Pager.OnPageListener<War
     //适配器
     private HotspotAdapter mAdapter;
 
+    /**
+     * 初始化
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_hot, container, false);
-        ViewUtils.inject(this, view);
-
+    protected void init() {
         initPager();
+    }
 
-        return view;
+    @Override
+    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return  inflater.inflate(R.layout.fragment_hot, container, false);
     }
 
     /**

@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * Created by shake on 17-5-2.
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends BaseFragment {
 
     private SliderLayout mSliderLayout;
 
@@ -51,10 +51,24 @@ public class HomeFragment extends Fragment {
     //获取OkHttpHelper实例
     private OkHttpHelper httpHelper = OkHttpHelper.getInstance();
 
-
-    @Nullable
+    /**
+     * 初始化
+     */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    protected void init() {
+
+    }
+
+    /**
+     * 为了兼容，这里有关View的操作是得放在这边的
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
+    @Override
+    protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         /**
@@ -69,7 +83,6 @@ public class HomeFragment extends Fragment {
 
         //初始化RecycleView
         initRecycleView(view);
-
 
         return view;
     }
@@ -124,6 +137,11 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onError(Response response, int code, Exception e) {
+
+            }
+
+            @Override
+            public void onTokenError(Response response, int code) {
 
             }
         });
