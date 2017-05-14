@@ -1,1 +1,1 @@
-include ':share', ':app'
+include ':share', ':app', ':smssdk', ':commonlib'
