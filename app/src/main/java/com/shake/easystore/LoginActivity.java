@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
@@ -43,6 +44,10 @@ public class LoginActivity extends Activity {
     private Button btn_login;
 
 
+    @ViewInject(R.id.txt_toRegister)
+    private TextView txt_toRegister;
+
+
     OkHttpHelper mOkHttpHelper = OkHttpHelper.getInstance();
 
     @Override
@@ -73,6 +78,14 @@ public class LoginActivity extends Activity {
             }
         });
 
+
+        //去注册
+        txt_toRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+            }
+        });
 
 
 
