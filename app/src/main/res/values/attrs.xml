@@ -7,5 +7,7 @@
         <attr name="rightButtonIcon" format="reference"/>
         <!-- 是否显示搜索框-->
         <attr name="isShowSearchView" format="boolean"/>
+        <!-- 右边按钮的文字-->
+        <attr name="rightButtonText" format="string"/>
     </declare-styleable>
 </resources>

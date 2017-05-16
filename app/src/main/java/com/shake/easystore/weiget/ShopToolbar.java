@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.shake.easystore.R;
 
+
 /**
  * Created by shake on 17-5-2.
  */
@@ -59,6 +60,13 @@ public class ShopToolbar extends Toolbar {
             } else {
                 showTitleView();
             }
+
+            //获取右边按钮的文字
+            CharSequence rightButtonText = a.getText(R.styleable.ShopToolbar_rightButtonText);
+            if(rightButtonText !=null){
+                setRightButtonText(rightButtonText);
+            }
+
 
             //回收资源
             a.recycle();
