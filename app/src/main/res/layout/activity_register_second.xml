@@ -1,13 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context="com.shake.easystore.RegisterSecondActivity">
 
-</RelativeLayout>
+    <com.shake.easystore.weiget.ShopToolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:navigationIcon="@drawable/icon_back_32px"
+        app:title="用户注册(2/2)"
+        app:rightButtonText="完 成"/>
+
+    <TextView
+        android:id="@+id/txtTip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/border_color"
+        android:textSize="12sp"
+        android:layout_marginTop="40dp"
+        android:padding="@dimen/largePadding"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="@dimen/largePadding"
+        android:orientation="vertical"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp">
+
+            <com.shake.easystore.weiget.ClearEditText
+                android:id="@+id/edittxt_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                style="@style/editText_base"
+                android:hint="请输入验证码"
+                android:inputType="number"
+                android:maxLength="4"/>
+
+            <Button
+                android:id="@+id/btn_reSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/smssdk_resend_identify_code"
+                style="@style/smallGreenButton"
+                android:enabled="false"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View style="@style/line_vertical"/>
+
+</LinearLayout>

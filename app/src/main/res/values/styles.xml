@@ -104,7 +104,32 @@
         <item name="android:textColorHint">@color/border_color</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@null</item>
+    </style>
 
+
+
+    <!-- 小按钮-->
+    <style name="smallButton">
+        <item name="android:textSize">@dimen/smallButtonTextSize</item>
+        <item name="android:textColor">@color/white_color_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingLeft">@dimen/smallPadding</item>
+        <item name="android:paddingRight">@dimen/smallPadding</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minWidth">@dimen/smallButtonWidth</item>
+        <item name="android:minHeight">@dimen/smallButtonHeight</item>
+    </style>
+
+    <!-- 小绿色按钮-->
+    <style name="smallGreenButton" parent="@style/smallButton">
+        <item name="android:background">@drawable/bg_btn_style_green</item>
+    </style>
+
+    <!-- 多选按钮-->
+    <style name="radioButton">
+        <item name="android:background">@drawable/selector_checkbox_green</item>
+        <item name="android:button">@null</item>
     </style>
 
 

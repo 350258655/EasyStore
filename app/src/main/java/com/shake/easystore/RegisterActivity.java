@@ -22,7 +22,7 @@ import cn.smssdk.SMSSDK;
 import cn.smssdk.utils.SMSLog;
 
 /**
- * 注册的Activity
+ * 注册的Activity。注册一直出bug，怀疑是被菜鸟窝屏蔽了接口
  */
 public class RegisterActivity extends BaseActivity {
 
@@ -82,6 +82,15 @@ public class RegisterActivity extends BaseActivity {
                 getCode();
             }
         });
+
+        //点击左边的按钮，结束掉这个Activity
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
 
     }
 

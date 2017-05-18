@@ -3,7 +3,6 @@ package com.shake.easystore.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -15,22 +14,17 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.shake.easystore.Contants;
 import com.shake.easystore.MainActivity;
-import com.shake.easystore.NewOrderActivity;
+import com.shake.easystore.CreateOrderActivity;
 import com.shake.easystore.R;
 import com.shake.easystore.adapter.BaseAdapter;
 import com.shake.easystore.adapter.CartAdapter;
 import com.shake.easystore.adapter.decoration.DividerItemDecoration;
 import com.shake.easystore.bean.ShoppingCart;
-import com.shake.easystore.bean.User;
 import com.shake.easystore.http.OkHttpHelper;
-import com.shake.easystore.http.SpotsCallBack;
 import com.shake.easystore.utils.CartProvider;
 import com.shake.easystore.weiget.ShopToolbar;
-import com.squareup.okhttp.Response;
 
 import java.util.List;
 
@@ -186,7 +180,7 @@ public class CartFragment extends BaseFragment {
             @Override
             public void onClick(View v) {
                 //跳转去订单Activity，但能进订单Activity的前提是先登录
-                Intent intent = new Intent(getContext(), NewOrderActivity.class);
+                Intent intent = new Intent(getContext(), CreateOrderActivity.class);
                 startActivity(intent,true);
             }
         });

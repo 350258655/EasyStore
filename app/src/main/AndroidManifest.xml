@@ -96,7 +96,7 @@
         </activity>
         <activity android:name=".BaseActivity">
         </activity>
-        <activity android:name=".NewOrderActivity">
+        <activity android:name=".CreateOrderActivity">
         </activity>
         <activity android:name=".RegisterActivity">
         </activity>
