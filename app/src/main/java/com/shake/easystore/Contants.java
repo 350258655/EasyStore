@@ -35,6 +35,10 @@ public class Contants {
         public static final String USER_DETAIL=BASE_URL +"user/get?id=1";
         public static final String REG=BASE_URL +"auth/reg";
 
+        public static final String ADDRESS_LIST=BASE_URL +"addr/list";
+        public static final String ADDRESS_CREATE=BASE_URL +"addr/create";
+        public static final String ADDRESS_UPDATE=BASE_URL +"addr/update";
+
     }
 
 }

@@ -102,6 +102,10 @@
         </activity>
         <activity android:name=".RegisterSecondActivity">
         </activity>
+        <activity android:name=".AddressListActivity">
+        </activity>
+        <activity android:name=".AddressAddActivity">
+        </activity>
     </application>
 
 </manifest>

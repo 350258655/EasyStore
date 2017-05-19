@@ -16,7 +16,7 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         app:title="首页"
-        app:isShowSearchView="true">
+        app:isShowSearchView="false">
     </com.shake.easystore.weiget.ShopToolbar>
 
     <!-- 真的布局文件？？？这里有点懵逼-->

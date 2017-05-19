@@ -2,10 +2,12 @@ package com.shake.easystore.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -104,9 +106,22 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
      * 清除数据
      */
     public void clearData() {
-        int itemCount = mListDatas.size();
-        mListDatas.clear();
-        this.notifyItemRangeRemoved(0, itemCount);
+//        int itemCount = mListDatas.size();
+//        mListDatas.clear();
+//        this.notifyItemRangeRemoved(0, itemCount);
+
+        if(mListDatas == null || mListDatas.size() <= 0){
+            return;
+        }
+        Iterator it = mListDatas.iterator();
+
+        while (it.hasNext()){
+            T t = (T) it.next();
+            int position = mListDatas.indexOf(t);
+            it.remove();
+            notifyItemRemoved(position);
+        }
+
     }
 
 
@@ -146,23 +161,28 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
     /**
      * 刷新数据
      *
-     * @param list
+     * @param lists
      */
-    public void refreshData(List<T> list) {
-        if (list != null && list.size() > 0) {
+    public void refreshData(List<T> lists) {
 
-            //先清除数据
-            clearData();
+        //先清除数据
+        clearData();
+
+        if (lists != null && lists.size() > 0) {
+
+            int size = lists.size();
+            Log.i("TAG", "BaseAdapter,refreshData,集合的长度： "+size);
             //遍历添加数据
-            int size = list.size();
             for (int i = 0; i < size; i++) {
-                mListDatas.add(i, list.get(i));
+                Log.i("TAG", "for循环中的size: "+size);
+                mListDatas.add(i,lists.get(i));
                 //更新对应的Item
                 notifyItemInserted(i);
             }
 
         }
     }
+
 
 
     /**

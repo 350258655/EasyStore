@@ -39,4 +39,6 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile project(':share')
     compile project(':smssdk')
+    compile 'liji.library.dev:citypickerview:1.0.0'
+
 }

@@ -2,7 +2,6 @@ package com.shake.easystore;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -99,7 +98,7 @@ public class MainActivity extends BaseActivity {
             //将View装载进 TabSpec
             tabSpec.setIndicator(view);
             //将 TabSpec 装载进 FragmentTabHost
-            mTabHost.addTab(tabSpec,tab.getFragment(),null);
+            mTabHost.addTab(tabSpec, tab.getFragment(), null);
         }
 
         /**
@@ -118,18 +117,35 @@ public class MainActivity extends BaseActivity {
             @Override
             public void onTabChanged(String tabId) {
 
-                if(tabId == getString(R.string.cart)){
+                if (tabId == getString(R.string.cart)) {
                     //刷新数据
-                    refreshData();
+                    refreshCartData();
                     Log.i("TAG", "MainActivity，切换到购物车页面:");
-                }else {
-                    //假如是切换到其他Fragment，有关ToolBar的设置需要我们切换回来
-                    //先隐藏TitleView
+                } else if (tabId == getString(R.string.mine)) {
+                    //隐藏TitleView
                     mShopToolbar.hideTitleView();
                     //隐藏右边的按钮
                     mShopToolbar.getRightButton().setVisibility(View.GONE);
-                    //再显示搜索框
-                    mShopToolbar.showSearchView();
+
+                } else if (tabId == getString(R.string.hot)) {
+                    //常规设置
+                    toolBarSetting();
+                    mShopToolbar.setTitle("热卖");
+                } else if (tabId == getString(R.string.home)) {
+                    //常规设置
+                    toolBarSetting();
+                    mShopToolbar.setTitle("首页");
+                } else if (tabId == getString(R.string.catagory)) {
+                    //常规设置
+                    toolBarSetting();
+                    mShopToolbar.setTitle("分类");
+                } else {
+                    //假如是切换到其他Fragment，有关ToolBar的设置需要我们切换回来
+                    //都显示TitleView
+                    mShopToolbar.showTitleView();
+                    //隐藏右边的按钮
+                    mShopToolbar.getRightButton().setVisibility(View.GONE);
+
                 }
 
             }
@@ -141,14 +157,13 @@ public class MainActivity extends BaseActivity {
     /**
      * 刷新购物车数据
      */
-    private void refreshData() {
+    private void refreshCartData() {
 
         //假如购物车Fragment还没有创建，那么就创建一个购物车Fragment，随后刷新数据
-        if(cartFragment == null){
+        if (cartFragment == null) {
             //根据TAG获取一个Fragment实例
             Fragment fragment = getSupportFragmentManager().findFragmentByTag(getString(R.string.cart));
-            Log.i("TAG", "MainActivity,refreshData: 购物车Fragment还没创建，拿到的fragment是否为空"+fragment);
-            if(fragment != null){
+            if (fragment != null) {
                 cartFragment = (CartFragment) fragment;
                 //刷新购物车数据
                 cartFragment.refreshCarData();
@@ -156,8 +171,7 @@ public class MainActivity extends BaseActivity {
                 cartFragment.changeToolBarState();
             }
 
-        }else {
-            Log.i("TAG", "MainActivity,refreshData: 购物车Fragment已经创建好了");
+        } else {
             //假如购物车Fragment是被创建过了，那么直接刷新数据就好
             cartFragment.refreshCarData();
             //改变ToolBar状态
@@ -179,5 +193,17 @@ public class MainActivity extends BaseActivity {
         img.setBackgroundResource(tab.getIcon());
         text.setText(tab.getTitle());
         return view;
+    }
+
+
+    /**
+     * toolbar的一些通用设置
+     */
+    private void toolBarSetting() {
+        //假如是切换到其他Fragment，有关ToolBar的设置需要我们切换回来
+        //都显示TitleView
+        mShopToolbar.showTitleView();
+        //隐藏右边的按钮
+        mShopToolbar.getRightButton().setVisibility(View.GONE);
     }
 }

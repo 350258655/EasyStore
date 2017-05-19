@@ -92,7 +92,7 @@ public class OkHttpHelper {
      * @param params
      * @param callback
      */
-    public void get(String url, Map<String, String> params, BaseCallback callback) {
+    public void get(String url, Map<String, Object> params, BaseCallback callback) {
         //1，构建Request对象
         Request request = buildGetRequest(url, params);
         //2、去请求数据
@@ -107,7 +107,7 @@ public class OkHttpHelper {
      * @param params
      * @return
      */
-    private Request buildGetRequest(String url, Map<String, String> params) {
+    private Request buildGetRequest(String url, Map<String, Object> params) {
         return buildRequest(url, params, HttpMethodType.GET);
     }
 
@@ -118,7 +118,7 @@ public class OkHttpHelper {
      * @param params
      * @return
      */
-    private Request buildPostRequest(String url, Map<String, String> params) {
+    private Request buildPostRequest(String url, Map<String, Object> params) {
         return buildRequest(url, params, HttpMethodType.POST);
     }
 
@@ -130,7 +130,7 @@ public class OkHttpHelper {
      * @param params
      * @param callback
      */
-    public void post(String url, Map<String, String> params, BaseCallback callback) {
+    public void post(String url, Map<String, Object> params, BaseCallback callback) {
         //第一步，获取Request对象
         Request request = buildPostRequest(url, params);
         //第二步，去请求数据v
@@ -145,7 +145,7 @@ public class OkHttpHelper {
      * @param methodType
      * @return
      */
-    private Request buildRequest(String url, Map<String, String> params, HttpMethodType methodType) {
+    private Request buildRequest(String url, Map<String, Object> params, HttpMethodType methodType) {
         //封装Request对象
         Request.Builder builder = new Request.Builder();
         builder.url(url);
@@ -170,7 +170,7 @@ public class OkHttpHelper {
      * @param params
      * @return
      */
-    private String buildUrlParams(String url, Map<String, String> params) {
+    private String buildUrlParams(String url, Map<String, Object> params) {
         //先对Params进行判空处理
         if (params == null) {
             params = new HashMap<>(1);
@@ -184,7 +184,7 @@ public class OkHttpHelper {
 
         //叠加参数
         StringBuffer sb = new StringBuffer();
-        for (Map.Entry<String, String> entry : params.entrySet()) {
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
             sb.append(entry.getKey() + "=" + entry.getValue());
             sb.append("&");
         }
@@ -212,14 +212,14 @@ public class OkHttpHelper {
      * @param params
      * @return
      */
-    private RequestBody buildFormData(Map<String, String> params) {
+    private RequestBody buildFormData(Map<String, Object> params) {
 
         FormEncodingBuilder encodingBuilder = new FormEncodingBuilder();
 
         if (params != null) {
 
-            for (Map.Entry<String, String> entry : params.entrySet()) {
-                encodingBuilder.add(entry.getKey(), entry.getValue());
+            for (Map.Entry<String, Object> entry : params.entrySet()) {
+                encodingBuilder.add(entry.getKey(),entry.getValue()==null?"":entry.getValue().toString());
             }
 
             /**

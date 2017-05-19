@@ -184,7 +184,7 @@ public class RegisterSecondActivity extends Activity {
      * 注册
      */
     private void doRegister() {
-        Map<String,String> params = new HashMap<>(2);
+        Map<String,Object> params = new HashMap<>(2);
         params.put("phone",phone);
         params.put("password", DESUtil.encode(Contants.DES_KEY, pwd));
 

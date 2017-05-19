@@ -9,13 +9,11 @@ import android.widget.Toast;
 
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
+import com.shake.easystore.utils.CommonUtils;
 import com.shake.easystore.weiget.ClearEditText;
 import com.shake.easystore.weiget.ShopToolbar;
 
 import org.json.JSONObject;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import cn.smssdk.EventHandler;
 import cn.smssdk.SMSSDK;
@@ -104,46 +102,46 @@ public class RegisterActivity extends BaseActivity {
         String pwd = mEtxtPwd.getText().toString().trim();
 
         //检查手机号码和区号等
-        checkPhoneNum(phone, code);
+        CommonUtils.checkPhoneNum(phone, code,this);
 
         //获取验证码
         SMSSDK.getVerificationCode(code, phone);
     }
 
-    /**
-     * 检查手机号码和区号等
-     *
-     * @param phone
-     * @param code
-     */
-    private void checkPhoneNum(String phone, String code) {
-
-        if(code.startsWith("+")){
-            code = code.substring(1);
-        }
-
-        if(TextUtils.isEmpty(phone)){
-            Toast.makeText(RegisterActivity.this, "请输入手机号码", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if(code == "86"){
-            if(phone.length() != 11){
-                Toast.makeText(RegisterActivity.this, "手机号码长度不对", Toast.LENGTH_SHORT).show();
-                return;
-            }
-        }
-
-        String rule = "^1(3|5|7|8|4)\\d{9}";
-        Pattern p = Pattern.compile(rule);
-        Matcher m = p.matcher(phone);
-
-        if (!m.matches()) {
-            Toast.makeText(RegisterActivity.this, "您输入的手机号码格式不正确", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-    }
+//    /**
+//     * 检查手机号码和区号等
+//     *
+//     * @param phone
+//     * @param code
+//     */
+//    private void checkPhoneNum(String phone, String code) {
+//
+//        if(code.startsWith("+")){
+//            code = code.substring(1);
+//        }
+//
+//        if(TextUtils.isEmpty(phone)){
+//            Toast.makeText(RegisterActivity.this, "请输入手机号码", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        if(code == "86"){
+//            if(phone.length() != 11){
+//                Toast.makeText(RegisterActivity.this, "手机号码长度不对", Toast.LENGTH_SHORT).show();
+//                return;
+//            }
+//        }
+//
+//        String rule = "^1(3|5|7|8|4)\\d{9}";
+//        Pattern p = Pattern.compile(rule);
+//        Matcher m = p.matcher(phone);
+//
+//        if (!m.matches()) {
+//            Toast.makeText(RegisterActivity.this, "您输入的手机号码格式不正确", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//    }
 
 
     @Override

@@ -111,7 +111,7 @@ public class LoginActivity extends Activity {
         }
 
         //存储帐号密码
-        Map<String,String> map = new HashMap<>(2);
+        Map<String,Object> map = new HashMap<>(2);
         map.put("phone",phone);
         map.put("password", DESUtil.encode(Contants.DES_KEY,password));
 
