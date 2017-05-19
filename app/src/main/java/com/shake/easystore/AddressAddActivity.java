@@ -35,6 +35,12 @@ public class AddressAddActivity extends Activity {
     @ViewInject(R.id.toolbar)
     private ShopToolbar mToolBar;
 
+    //判断当前页面是不是编辑页面(或者是更新界面)
+    private boolean isEdit;
+
+    //要进行编辑的地址
+    private Address mEditaddress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +48,33 @@ public class AddressAddActivity extends Activity {
         setContentView(R.layout.activity_address_add);
         ViewUtils.inject(this);
 
+        Bundle bundle = getIntent().getBundleExtra(Contants.BUNDLE_ADDRESS);
+        if (bundle != null) {
+            //假如是编辑页面，那就显示编辑页面的界面
+            initEditView(bundle);
+            isEdit = true;
+        }
+
+        //初始化事件
         initEvent();
 
+
+    }
+
+    /**
+     * 初始化编辑页面的视图
+     */
+    private void initEditView(Bundle bundle) {
+
+        mEditaddress = (Address) bundle.getSerializable(Contants.ADDRESS);
+        if (mEditaddress != null) {
+            mEditAddr.setText(mEditaddress.getDetailAddress());
+            mEditConsignee.setText(mEditaddress.getName());
+            mEditPhone.setText(mEditaddress.getPhone());
+            mTxtAddress.setText(mEditaddress.getAddress());
+        }
+
+        mToolBar.setTitle("编辑");
 
     }
 
@@ -76,6 +107,48 @@ public class AddressAddActivity extends Activity {
      * 保存收货地址
      */
     private void saveAddress() {
+        Dao dao = Dao.getDao(AddressAddActivity.this);
+
+        if (isEdit) {
+            //保存编辑的收货地址
+            saveEditAddress(dao);
+        } else {
+            //保存新增的收货地址
+            saveInsertAddress(dao);
+        }
+
+
+    }
+
+    /**
+     * 保存编辑的收货地址
+     *
+     * @param dao
+     *
+     */
+    private void saveEditAddress(Dao dao) {
+
+        //更新 mEditaddress 的值
+        mEditaddress.setAddress(mTxtAddress.getText().toString().trim());
+        mEditaddress.setName(mEditConsignee.getText().toString().trim());
+        mEditaddress.setPhone(mEditPhone.getText().toString().trim());
+        mEditaddress.setDetailAddress(mEditPhone.getText().toString().trim());
+
+        dao.update(mEditaddress, new Dao.OnCompleteListener() {
+            @Override
+            public void onDone(List<Address> list) {
+                //回调数据
+                setResult(Contants.REQUEST_EDIT_CODE);
+                //结束这个Activity，回到"我的" 界面
+                finish();
+            }
+        });
+    }
+
+    /**
+     * 保存新增的收货地址
+     */
+    private void saveInsertAddress(Dao dao) {
         //获取信息
         final String name = mEditConsignee.getText().toString().trim();
         final String phone = mEditPhone.getText().toString().trim();
@@ -89,9 +162,9 @@ public class AddressAddActivity extends Activity {
         }
         CommonUtils.checkPhoneNum(phone, "86", this);
 
+        Address addressObject = new Address(name, address, phone, detailAddress, false);
 
-        Dao dao = Dao.getDao(AddressAddActivity.this);
-        Address addressObject = new Address(name, address, phone, detailAddress,false);
+
         dao.add(addressObject, new Dao.OnCompleteListener() {
             @Override
             public void onDone(List<Address> list) {
@@ -102,7 +175,6 @@ public class AddressAddActivity extends Activity {
                 finish();
             }
         });
-
 
     }
 

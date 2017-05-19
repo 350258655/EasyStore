@@ -57,6 +57,23 @@ public class AddressListActivity extends BaseActivity {
      */
     private void initAddressEvent() {
 
+        //点击编辑收货地址
+        mAdapter.setEditOnClickListener(new AddressAdapter.EditOnClickListener() {
+            @Override
+            public void onClick(Address address, int position) {
+
+                Intent intent = new Intent(AddressListActivity.this,AddressAddActivity.class);
+                //把地址带过来
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(Contants.ADDRESS, address);
+                intent.putExtra(Contants.BUNDLE_ADDRESS, bundle);
+
+                //跳转到编辑的Activity
+                startActivityForResult(intent,Contants.REQUEST_EDIT_CODE);
+
+            }
+        });
+
     }
 
     /**
@@ -208,7 +225,8 @@ public class AddressListActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         initAddress();
-        
+        //同时也要重新设置监听事件
+        initAddressEvent();
     }
 
 

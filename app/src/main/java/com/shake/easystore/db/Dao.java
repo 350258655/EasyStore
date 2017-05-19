@@ -96,7 +96,10 @@ public class Dao {
     /**
      * 更新数据
      */
-    public void update(Address address) {
+    public void update(Address address,OnCompleteListener onCompleteListener) {
+
+        Log.i("TAG", "DAO，update，传递过来的ID是多少: "+address.getId());
+
         //获取数据库对象
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
@@ -105,7 +108,31 @@ public class Dao {
         values.put("name", address.getName());
         values.put("phone", address.getPhone());
         values.put("detailAddress", address.getDetailAddress());
-        values.put("isDefault", address.getIsDefault());
+        values.put("isDefault", String.valueOf(address.getIsDefault()));
+        values.put("address", address.getAddress());
+        String id = address.getId();
+        Log.i("TAG", "DAO，update，修改的ID是多少：" + id + ",它是不是默认的：" + address.getIsDefault());
+        //更新数据
+        db.update(FORM_NAME, values, "id=?", new String[]{id});
+        this.mListener = onCompleteListener;
+        mListener.onDone(null);
+    }
+
+    /**
+     * 更新数据
+     */
+    public void update(Address address) {
+
+
+        //获取数据库对象
+        SQLiteDatabase db = mHelper.getReadableDatabase();
+
+        //封装数据
+        ContentValues values = new ContentValues();
+        values.put("name", address.getName());
+        values.put("phone", address.getPhone());
+        values.put("detailAddress", address.getDetailAddress());
+        values.put("isDefault", String.valueOf(address.getIsDefault()));
         values.put("address", address.getAddress());
         String id = address.getId();
         Log.i("TAG", "DAO，update，修改的ID是多少："+id+",它是不是默认的："+address.getIsDefault());

@@ -12,8 +12,11 @@ public class Contants {
     public  static final String DES_KEY="Cniao5_123456";
     public static final String USER_JSON="user_json";
     public static final String TOKEN="token";
+    public static final String ADDRESS="address";
+    public static final String BUNDLE_ADDRESS="address";
 
     public  static final int REQUEST_CODE=0;
+    public  static final int REQUEST_EDIT_CODE=1;
 
     //
     public static class API{
