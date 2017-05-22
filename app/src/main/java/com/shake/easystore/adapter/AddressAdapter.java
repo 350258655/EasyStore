@@ -1,14 +1,23 @@
 package com.shake.easystore.adapter;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import com.shake.easystore.AddressListActivity;
 import com.shake.easystore.R;
 import com.shake.easystore.bean.Address;
+import com.shake.easystore.db.Dao;
+
+import net.lemonsoft.lemonhello.LemonHello;
+import net.lemonsoft.lemonhello.LemonHelloAction;
+import net.lemonsoft.lemonhello.LemonHelloInfo;
+import net.lemonsoft.lemonhello.LemonHelloView;
+import net.lemonsoft.lemonhello.interfaces.LemonHelloActionDelegate;
 
 import java.util.List;
 
@@ -20,10 +29,15 @@ public class AddressAdapter extends BaseAdapter<Address> {
     //各种回调监听接口
     private DefaultAddressListener mDefaultAddressListener;
     private EditOnClickListener mEditOnClickListener;
+    private DeleteOnClickListener mDeleteOnClickListener;
+
+    private Context mContext;
+
 
 
     public AddressAdapter(Context context, List<Address> datas) {
         super(context, R.layout.template_address, datas);
+        this.mContext = context;
     }
 
     @Override
@@ -80,12 +94,36 @@ public class AddressAdapter extends BaseAdapter<Address> {
      * @param address
      * @param position
      */
-    private void deleteAddress(Address address, int position) {
+    private void deleteAddress(final Address address, final int position) {
 
-        //TODO 先删除ListDatas中的数据
-        //TODO 再同步删除数据库中的数据
+        //删除的对话框
+        LemonHello.getWarningHello("您确认删除这条数据吗？", "删除这条数据后会同时删除其关联的数据，并且无法撤销！")
+                .addAction(new LemonHelloAction("取消", new LemonHelloActionDelegate() {
+                    @Override
+                    public void onClick(LemonHelloView helloView, LemonHelloInfo helloInfo, LemonHelloAction helloAction) {
+                        helloView.hide();
+                    }
+                }))
+                .addAction(new LemonHelloAction("确定删除", Color.RED, new LemonHelloActionDelegate() {
+                    @Override
+                    public void onClick(LemonHelloView helloView, LemonHelloInfo helloInfo, LemonHelloAction helloAction) {
+                        helloView.hide();
 
+                        //TODO 先删除ListDatas中的数据
+                        mListDatas.remove(position);
+                        notifyItemRemoved(position);
+                        //TODO 再同步删除数据库中的数据
+                        Dao dao = Dao.getDao(mContext);
+                        dao.delete(address.getId());
 
+                        if(mDeleteOnClickListener != null){
+                            //回调给外面，让外面的重新把第一个地址设置为默认地址
+                            mDeleteOnClickListener.onClick(address,position);
+                        }
+
+                    }
+                }))
+                .show((AddressListActivity) mContext);
 
     }
 
@@ -140,6 +178,14 @@ public class AddressAdapter extends BaseAdapter<Address> {
 
 
     /**
+     * 设置删除的监听器
+     */
+    public interface DeleteOnClickListener {
+        void onClick(Address address, int position);
+    }
+
+
+    /**
      * 暴露默认地址的监听器接口
      *
      * @param listener
@@ -155,6 +201,15 @@ public class AddressAdapter extends BaseAdapter<Address> {
      */
     public void setEditOnClickListener(EditOnClickListener listener) {
         this.mEditOnClickListener = listener;
+    }
+
+    /**
+     * 暴露删除按钮的监听器接口
+     *
+     * @param listener
+     */
+    public void setDeleteOnClickListener(DeleteOnClickListener listener) {
+        this.mDeleteOnClickListener = listener;
     }
 
 

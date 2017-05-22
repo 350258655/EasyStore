@@ -74,6 +74,18 @@ public class AddressListActivity extends BaseActivity {
             }
         });
 
+
+        //点击删除按钮
+        mAdapter.setDeleteOnClickListener(new AddressAdapter.DeleteOnClickListener() {
+            @Override
+            public void onClick(Address address, int position) {
+                //初始化视图，去重新设置一个默认的地址
+                initAddress();
+                //同时也要重新设置监听事件,否则会发生空指针异常
+                initAddressEvent();
+            }
+        });
+
     }
 
     /**
