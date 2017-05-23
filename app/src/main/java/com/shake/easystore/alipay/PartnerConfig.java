@@ -1,0 +1,12 @@
+package com.shake.easystore.alipay;
+
+/**
+ * Created by Locke on 15/5/29.
+ */
+public class PartnerConfig {
+    public static final String ALIPAY_PLUGIN_NAME = "alipay_plugin_20120428msp.apk";
+    public static final String PARTNER = "2088111008275155";
+    public static final String RSA_ALIPAY_PUBLIC = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC/pyrORtGuJIXYp2K0kTVQRcfzexHfRvsmqHscV5YNxTnMEHMPgWRGhfhcAVs1kz6HxFTXIxFC/QkVbXFpDSQ5ieyQ+Z4giYMsihmg+Ic/Ugc2G6DSrDuOI3DV+wC9iLnxWaPOCLOjGfm4xwSFcHFsLObxmTNmYZcB68OUDYhRwQIDAQAB";
+    public static final String RSA_PRIVATE = "MIICWwIBAAKBgQC/pyrORtGuJIXYp2K0kTVQRcfzexHfRvsmqHscV5YNxTnMEHMPgWRGhfhcAVs1kz6HxFTXIxFC/QkVbXFpDSQ5ieyQ+Z4giYMsihmg+Ic/Ugc2G6DSrDuOI3DV+wC9iLnxWaPOCLOjGfm4xwSFcHFsLObxmTNmYZcB68OUDYhRwQIDAQABAoGALLdZQnW9mI8G96zeV9kFgmw1ofaWDe1mzfdDejJpXV8mBBnWbsi218mMUBM078QiM9U4IlYZQfL9+pTlgChDygyyFp0X5OHRn/1gVv7hqGe6aP988VgKhyxpUTA8RAnO73TEJZqy11lJKbLZu1h6rnD93KNV8Fyp+GHodRtJ3hECQQD9/sjJGCnvIVYe47gUCw4fJ+yu2PGc8GQ1TSGEvGg9Qgyh1Yv+V+Myl0sVza9d2myzi4v2bYgx2h1DmE7U1ZhlAkEAwSpqdypecOMnrw9UigBH4KOj3cGFIWCBjudKSuGRewhN7c4NBYM1nSR3kdl2qDpu9rLHcEUPnXmsfW4A1c3oLQJAfaOkamS7iYAx+4GlMrTtPVggabUCfyEiUINgyynvXi3n1b2uTBfpWMMh7x0ZXBGJp56lkzZHInHD/AXBKOKnSQJAesBoncen8lb4DfBRCc1539A9vxtObdJ1IonqlUFZAPVbCGbrsXgbJvxYm6+1DtzrTQx5XugULz92FNNF5piOFQJASrGHdVGkzXRpbT1lUN/IgNPkyJVLW6s9iNijuEt99DHl0HjEOhNs7bmdrgoHAan2Z10B17BVGAJqgTg8c1Fb2w==";
+    public static final String SELLER = "ddlegame@ddle.cn";
+}

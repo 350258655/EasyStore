@@ -34,7 +34,6 @@ public class AddressAdapter extends BaseAdapter<Address> {
     private Context mContext;
 
 
-
     public AddressAdapter(Context context, List<Address> datas) {
         super(context, R.layout.template_address, datas);
         this.mContext = context;
@@ -116,9 +115,9 @@ public class AddressAdapter extends BaseAdapter<Address> {
                         Dao dao = Dao.getDao(mContext);
                         dao.delete(address.getId());
 
-                        if(mDeleteOnClickListener != null){
+                        if (mDeleteOnClickListener != null) {
                             //回调给外面，让外面的重新把第一个地址设置为默认地址
-                            mDeleteOnClickListener.onClick(address,position);
+                            mDeleteOnClickListener.onClick(address, position);
                         }
 
                     }
@@ -127,6 +126,12 @@ public class AddressAdapter extends BaseAdapter<Address> {
 
     }
 
+    /**
+     * 设置有关CheckBox的点击事件
+     *
+     * @param checkBox
+     * @param address
+     */
     private void setDefaultCheck(CheckBox checkBox, final Address address) {
         //看该地址是否是默认地址
         boolean isDefault = address.getIsDefault();

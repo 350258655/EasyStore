@@ -132,7 +132,7 @@ public class AddressAddActivity extends Activity {
         mEditaddress.setAddress(mTxtAddress.getText().toString().trim());
         mEditaddress.setName(mEditConsignee.getText().toString().trim());
         mEditaddress.setPhone(mEditPhone.getText().toString().trim());
-        mEditaddress.setDetailAddress(mEditPhone.getText().toString().trim());
+        mEditaddress.setDetailAddress(mEditAddr.getText().toString().trim());
 
         dao.update(mEditaddress, new Dao.OnCompleteListener() {
             @Override

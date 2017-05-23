@@ -3,6 +3,7 @@ package com.shake.easystore;
 import android.app.Application;
 
 import com.shake.easystore.utils.IntentUtils;
+import com.shake.easystore.utils.StaticDataUtils;
 import com.shake.easystore.utils.UserLocalData;
 
 import cn.smssdk.SMSSDK;
@@ -22,6 +23,9 @@ public class MyApplication extends Application {
 
         //存储Intent的工具类
         IntentUtils.init();
+
+        //静态变量工具类
+        StaticDataUtils.init();
 
         //初始化短信SDK
         SMSSDK.initSDK(this, "1dd61e48a0200", "08e4a8e566ca77442e4aaa70d9b3a861");

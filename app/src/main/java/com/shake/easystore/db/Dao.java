@@ -73,7 +73,7 @@ public class Dao {
      *
      * @param address
      */
-    public void add(Address address,OnCompleteListener onCompleteListener) {
+    public void add(Address address, OnCompleteListener onCompleteListener) {
         //获取数据库对象
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
@@ -96,9 +96,9 @@ public class Dao {
     /**
      * 更新数据
      */
-    public void update(Address address,OnCompleteListener onCompleteListener) {
+    public void update(Address address, OnCompleteListener onCompleteListener) {
 
-        Log.i("TAG", "DAO，update，传递过来的ID是多少: "+address.getId());
+        Log.i("TAG", "DAO，update，传递过来的ID是多少: " + address.getId());
 
         //获取数据库对象
         SQLiteDatabase db = mHelper.getReadableDatabase();
@@ -135,21 +135,17 @@ public class Dao {
         values.put("isDefault", String.valueOf(address.getIsDefault()));
         values.put("address", address.getAddress());
         String id = address.getId();
-        Log.i("TAG", "DAO，update，修改的ID是多少："+id+",它是不是默认的："+address.getIsDefault());
+        Log.i("TAG", "DAO，update，修改的ID是多少：" + id + ",它是不是默认的：" + address.getIsDefault());
         //更新数据
         db.update(FORM_NAME, values, "id=?", new String[]{id});
 
     }
 
 
-
-
-
     /**
      * 修改全部默认值为false
-     *
      */
-    public void upDateIsDefaultToFalse(){
+    public void upDateIsDefaultToFalse() {
         //获取数据库对象
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
@@ -160,21 +156,18 @@ public class Dao {
 
     /**
      * 设置默认收货地址
+     *
      * @param id
      */
-    public void upDateTheDefault(String id){
+    public void upDateTheDefault(String id) {
         //获取数据库对象
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
 
-        String sql = "UPDATE shake SET isDefault = 'true' WHERE id = '"+id+"'";
-        Log.i("TAG", "DAO,执行更新的SQL语句: "+sql);
+        String sql = "UPDATE shake SET isDefault = 'true' WHERE id = '" + id + "'";
+        Log.i("TAG", "DAO,执行更新的SQL语句: " + sql);
         db.execSQL(sql);
     }
-
-
-
-
 
 
     /**
@@ -198,7 +191,7 @@ public class Dao {
     public List<Address> query() {
 
         //查询全部，每次查询之前，都把集合中的数据先清空
-        if(mAddressList.size() > 0){
+        if (mAddressList.size() > 0) {
             mAddressList.clear();
         }
 
@@ -209,7 +202,7 @@ public class Dao {
         Cursor cursor = db.query(FORM_NAME, null, null, null, null, null, null);
 
         //封装查询出来的对象
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             String address = cursor.getString(cursor.getColumnIndex("address"));
@@ -218,7 +211,7 @@ public class Dao {
             String isDefault = cursor.getString(cursor.getColumnIndex("isDefault"));
 
             //封装数据并且添加到集合中
-            Address addressObject = new Address(String.valueOf(id),name,address,phone,detailAddress,Boolean.valueOf(isDefault));
+            Address addressObject = new Address(String.valueOf(id), name, address, phone, detailAddress, Boolean.valueOf(isDefault));
             mAddressList.add(addressObject);
         }
 
@@ -231,9 +224,16 @@ public class Dao {
      * @return
      */
     public void query(OnCompleteListener listener) {
+        //查询全部，同时把默认地址的信息 插入到首行的位置
+        queryAll();
 
+        this.mListener = listener;
+        listener.onDone(mAddressList);
+    }
+
+    private void queryAll() {
         //查询全部，每次查询之前，都把集合中的数据先清空
-        if(mAddressList.size() > 0){
+        if (mAddressList.size() > 0) {
             mAddressList.clear();
         }
 
@@ -241,10 +241,10 @@ public class Dao {
         SQLiteDatabase db = mHelper.getReadableDatabase();
 
         //查询表中的所有数据
-        Cursor cursor = db.query(FORM_NAME,null,null,null,null,null,null);
+        Cursor cursor = db.query(FORM_NAME, null, null, null, null, null, null);
 
         //封装查询出来的对象
-        while (cursor.moveToNext()){
+        while (cursor.moveToNext()) {
             int id = cursor.getInt(cursor.getColumnIndex("id"));
             String name = cursor.getString(cursor.getColumnIndex("name"));
             String address = cursor.getString(cursor.getColumnIndex("address"));
@@ -252,30 +252,29 @@ public class Dao {
             String isDefault = cursor.getString(cursor.getColumnIndex("isDefault"));
             String detailAddress = cursor.getString(cursor.getColumnIndex("detailAddress"));
 
-            Log.i("TAG", "查询，ID是多少："+id+",名字是："+name+",是不是被选中的:"+isDefault);
+            Log.i("TAG", "查询，ID是多少：" + id + ",名字是：" + name + ",是不是被选中的:" + isDefault);
 
             //封装数据并且添加到集合中
-            Address addressObject = new Address(String.valueOf(id),name,address,phone,detailAddress,Boolean.valueOf(isDefault));
+            Address addressObject = new Address(String.valueOf(id), name, address, phone, detailAddress, Boolean.valueOf(isDefault));
 
 
             //TODO 假如是true，那么让它位于第一位
-            if(addressObject.getIsDefault()){
-                mAddressList.add(0,addressObject);
-            }else {
+            if (addressObject.getIsDefault()) {
+                mAddressList.add(0, addressObject);
+            } else {
                 mAddressList.add(addressObject);
             }
 
         }
 
-        this.mListener = listener;
-        listener.onDone(mAddressList);
     }
+
 
 
     /**
      * 操作完成的接口
      */
-    public interface OnCompleteListener{
+    public interface OnCompleteListener {
         void onDone(List<Address> list);
     }
 

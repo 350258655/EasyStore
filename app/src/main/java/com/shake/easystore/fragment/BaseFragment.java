@@ -2,7 +2,6 @@ package com.shake.easystore.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,12 +56,12 @@ public abstract class BaseFragment extends Fragment {
     public void startActivity(Intent intent, boolean isNeedLogin) {
 
         //假如需要登录
-        if(isNeedLogin){
+        if (isNeedLogin) {
             User user = UserLocalData.getUser();
             //假如user不为空，证明当前已经是登录状态
-            if(user != null){
+            if (user != null) {
                 super.startActivity(intent);
-            }else {
+            } else {
                 //当前是未登录状态，需要先跳转到登录界面
 
                 //先保存当前的Intent,记录它是要跳转到哪个Activity
@@ -71,7 +70,7 @@ public abstract class BaseFragment extends Fragment {
                 Intent loginIntent = new Intent(getContext(), LoginActivity.class);
                 super.startActivity(loginIntent);
             }
-        }else {
+        } else {
             //假如不需要先登录，那么直接调用父类的跳转方法
             super.startActivity(intent);
         }
@@ -80,4 +79,33 @@ public abstract class BaseFragment extends Fragment {
     }
 
 
+    /**
+     * 经过重载的startActivityForResult方法
+     *
+     * @param intent
+     * @param isNeedLogin
+     * @param requestCode
+     */
+    public void startActivityForResult(Intent intent, boolean isNeedLogin, int requestCode) {
+        //假如需要登录
+        if (isNeedLogin) {
+            User user = UserLocalData.getUser();
+            //假如user不为空，证明当前已经是登录状态
+            if (user != null) {
+                super.startActivityForResult(intent, requestCode);
+            } else {
+                //当前是未登录状态，需要先跳转到登录界面
+
+                //先保存当前的Intent,记录它是要跳转到哪个Activity
+                IntentUtils.putIntent(intent);
+                //再跳转到LoginActivity
+                Intent loginIntent = new Intent(getContext(), LoginActivity.class);
+                super.startActivityForResult(loginIntent, requestCode);
+            }
+        } else {
+            //假如不需要先登录，那么直接调用父类的跳转方法
+            super.startActivityForResult(intent, requestCode);
+        }
+
+    }
 }

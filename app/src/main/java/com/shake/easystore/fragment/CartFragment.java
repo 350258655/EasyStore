@@ -15,8 +15,9 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
-import com.shake.easystore.MainActivity;
+import com.shake.easystore.Contants;
 import com.shake.easystore.CreateOrderActivity;
+import com.shake.easystore.MainActivity;
 import com.shake.easystore.R;
 import com.shake.easystore.adapter.BaseAdapter;
 import com.shake.easystore.adapter.CartAdapter;
@@ -24,6 +25,7 @@ import com.shake.easystore.adapter.decoration.DividerItemDecoration;
 import com.shake.easystore.bean.ShoppingCart;
 import com.shake.easystore.http.OkHttpHelper;
 import com.shake.easystore.utils.CartProvider;
+import com.shake.easystore.utils.StaticDataUtils;
 import com.shake.easystore.weiget.ShopToolbar;
 
 import java.util.List;
@@ -84,7 +86,7 @@ public class CartFragment extends BaseFragment {
 
     @Override
     protected View createView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return  inflater.inflate(R.layout.fragment_cart, container, false);
+        return inflater.inflate(R.layout.fragment_cart, container, false);
     }
 
     /**
@@ -147,11 +149,10 @@ public class CartFragment extends BaseFragment {
         });
 
 
-
         //设置Adapter中每一项数量的监听回调
         mCartAdapter.setOnItemNumChangeListener(new CartAdapter.OnItemNumChangeListener() {
             @Override
-            public void onResult(int value,ShoppingCart cart) {
+            public void onResult(int value, ShoppingCart cart) {
                 //更新数据到内存中
                 mCartProvider.upDate(cart);
                 //更新合计价格
@@ -181,7 +182,15 @@ public class CartFragment extends BaseFragment {
             public void onClick(View v) {
                 //跳转去订单Activity，但能进订单Activity的前提是先登录
                 Intent intent = new Intent(getContext(), CreateOrderActivity.class);
-                startActivity(intent,true);
+
+                //获取那些被选中的Cart，因为只支付这部分
+                List<ShoppingCart> list = mCartAdapter.getCheckCart();
+
+                //存储这部分Cart
+                StaticDataUtils.putShopCarts(list);
+
+                //跳转Activity
+                startActivityForResult(intent, true, Contants.REQUEST_CODE);
             }
         });
 
@@ -308,5 +317,30 @@ public class CartFragment extends BaseFragment {
         mCheckBoxAll.setChecked(false);
         //适配器中每一项也默认不选中
         mCartAdapter.checkAllOrNull(false);
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //TODO 在这里，需要判断购物车中有哪些商品是已经下单了的，把这些下单的数据存到我的订单中，同时清除他们的信息
+        if(resultCode == Contants.REQUEST_CODE && resultCode == Contants.RESULT_SUCCESS){
+            //获取那些已经支付了的Cart
+            List<ShoppingCart> carts = StaticDataUtils.getShopCarts();
+            //先试下删除
+            mCartAdapter.deleteCard();
+            //静态辅助类中要清空信息
+            StaticDataUtils.clearShopCarts();
+
+        //TODO 假如这些信息没有成功，就存储到取消的订单中
+        }else if(requestCode == Contants.REQUEST_CODE && requestCode == Contants.RESULT_CANCLE){
+
+        }else if(requestCode == Contants.REQUEST_CODE && requestCode == Contants.RESULT_CANCLE){
+
+        }
+
+
+
     }
 }

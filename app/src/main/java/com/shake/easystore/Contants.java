@@ -14,9 +14,19 @@ public class Contants {
     public static final String TOKEN="token";
     public static final String ADDRESS="address";
     public static final String BUNDLE_ADDRESS="address";
+    public static final String BUNDLE_CHECK_CART="check_cart";
+    public static final String CHECK_CART="isCheck";
 
     public  static final int REQUEST_CODE=0;
     public  static final int REQUEST_EDIT_CODE=1;
+
+    public static final int RESULT_SUCCESS = 200;
+    public static final int RESULT_CANCLE= 300;
+    public static final int RESULT_FAILD= 400;
+    public static final int REQUEST_ALIPAY= 3;
+    public static final int REQUEST_WXPAY= 4;
+
+
 
     //
     public static class API{
@@ -41,6 +51,10 @@ public class Contants {
         public static final String ADDRESS_LIST=BASE_URL +"addr/list";
         public static final String ADDRESS_CREATE=BASE_URL +"addr/create";
         public static final String ADDRESS_UPDATE=BASE_URL +"addr/update";
+
+
+        public static final String HD_LOGIN = "http://api.hdg123.cn/index.php?r=auth/authorize&game_id=TEST-DEMO&package_id=T5&s=VXS%2FAMTCla6NBJwBNtaR7X4En4sJJ6pnBns4klee2On7PpH73G%2FSRpwZd0qD+8nl4MsQSaojGwb%2FN0M8zJNuJ0SkaUFp4auaRxkGu2%2BV%2BQZqvUQnR0JtGn7cb+RM2WAsTjLHX88W3IN71XpGZiy5vKlnEXpvNQJbvEKDNZ92UXWQ8y61OSH%2BKI+%2Bloxr2mb%2BBlxRPGpj2XR4v2upfRMIy8aRB8b0mJ%2BKOO2rdEYHey4fKioY6oW+X35lVfFS35ytGJHf%2F86i53MvAnz76n%2BBmoYGHNuNk2wKb6jHXRpfzW%2FxBFiA+6lZQKfq3s9xO%2Bi3jW9ODrR3W3DVmas%2BrhcqQcVQ%2FFkHKV3Ql7%2BPJ6nipmN3f+goEF1qXITvv31IB02s0F4W6uuoOZbMhb8S5WsMk5gVoGK9AcJP6rJY6dhhvX+m0PGoiRnfy0pXwTYGI095rkIx%2FujtnmGhGiEK2748qUnYFXwtOrhUBD2Tr7Y+gG4q%2B4CrjfCXfzRR%2BIh5StsqdDLgQmeRwx4Vot5ltYta9WB92ehTccbKBqzM+%2F%2FWRZqjwWj%2BEDXoMZdvXuskgSQ%2B8Jfh670GZFaFL9%2FrX56HrUDXM%2BWTKY6DE+DYrz%2BC2b%2B3RECPpG2SyzSdCraIN0gGKx6QDNO7ETh2qEv3j238g3evEXp6LK+RpPPjznKXlUvcOPngvhGB%2FJcX3qufQlHtnEUm%2Bfw%2BtJc1LoHQ%2FmKLo9qnZX%2B+TfILAYcXYnGNYyDACHaGxE1Pw6gXt5ZiDar8ZvvuN0SiW0iMvlUyLLMjDZuu+M1SLcOsIF4fKw%2BapRDZA&username=D980707&password=440991";
+        public static final String HD_CREATE_ORDER = "http://api.hdg123.cn/index.php?r=order/create&s=VXS%2FAMTCla6NBJwBNtaR7X4En4sJJ6pnBns4klee2On7PpH73G%2FSRpwZd0qD+8nl4MsQSaojGwb%2FN0M8zJNuJ0SkaUFp4auaRxkGu2%2BV%2BQZqvUQnR0JtGn7cb+RM2WAsTjLHX88W3IN71XpGZiy5vKlnEXpvNQJbvEKDNZ92UXWQ8y61OSH%2BKI+%2Bloxr2mb%2BBlxRPGpj2XR4v2upfRMIy8aRB8b0mJ%2BKOO2rdEYHey4fKioY6oW+X35lVfFS35ytGJHf%2F86i53MvAnz76n%2BBmoYGHNuNk2wKb6jHXRpfzW%2FxBFiA+6lZQKfq3s9xO%2Bi3jW9ODrR3W3DVmas%2BrhcqQcVQ%2FFkHKV3Ql7%2BPJ6nipmN3f+goEF1qXITvv31IB02s0F4W6uuoOZbMhb8S5WsMk5gVoGK9AcJP6rJY6dhhvX+m0PGoiRnfy0pXwTYGI095rkIx%2FujtnmGhGiEK2748qUnYFXwtOrhUBD2Tr7Y+gG4q%2B4CrjfCXfzRR%2BIh5StsqdDLgQmeRwx4Vot5ltYta9WB92ehTccbKBqzM+%2F%2FWRZqjwWj%2BEDXoMZdvXuskgSQ%2B8Jfh670GZFaFL9%2FrX56HrUDXM%2BWTKY6DE+DYrz%2BC2b%2B3RECPpG2SyzSdCraIN0gGKx6QDNO7ETh2qEv3j238g3evEXp6LK+RpPPjznKXlUvcOPngvhGB%2FJcX3qufQlHtnEUm%2Bfw%2BtJc1LoHQ%2FmKLo9qnZX%2B+TfILAYcXYnGNYyDACHaGxE1Pw6gXt5ZiDar8ZvvuN0SiW0iMvlUyLLMjDZuu+M1SLcOsIF4fKw%2BapRDZA";
 
     }
 

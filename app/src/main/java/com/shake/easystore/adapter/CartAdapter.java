@@ -13,6 +13,7 @@ import com.shake.easystore.utils.CartProvider;
 import com.shake.easystore.weiget.NumberAddSubView;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class CartAdapter extends BaseAdapter<ShoppingCart> {
                 //更新数量
                 cart.setCount(value);
                 //回调给Fragment
-                mOnItemNumChangeListener.onResult(value,cart);
+                mOnItemNumChangeListener.onResult(value, cart);
             }
         });
 
@@ -86,6 +87,24 @@ public class CartAdapter extends BaseAdapter<ShoppingCart> {
 
         Log.i("TAG", "CartAdapter，getTotalPrice，获取的总价格是: " + sum);
         return sum;
+    }
+
+
+    /**
+     * 获取选中的CART，并且重新组成一个集合
+     *
+     * @return
+     */
+    public List<ShoppingCart> getCheckCart() {
+        List<ShoppingCart> mDatas = new ArrayList<>();
+        if (mListDatas != null && mListDatas.size() > 0) {
+            for (ShoppingCart cart : mListDatas) {
+                if(cart.isChecked()){
+                    mDatas.add(cart);
+                }
+            }
+        }
+        return mDatas;
     }
 
 
@@ -147,21 +166,21 @@ public class CartAdapter extends BaseAdapter<ShoppingCart> {
     /**
      * 删除购物车中的item
      */
-    public void deleteCard(){
+    public void deleteCard() {
 
         //先拿到操作储存的工具类
         CartProvider cartProvider = CartProvider.getInstance(mContext);
 
         //不能遍历List去执行删除操作，因为List的数目一改变就会乱。可以用迭代器
-        if(mListDatas != null && mListDatas.size() > 0){
+        if (mListDatas != null && mListDatas.size() > 0) {
             //获取迭代器
             Iterator iterator = mListDatas.iterator();
 
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 //获取那个Item
                 ShoppingCart cart = (ShoppingCart) iterator.next();
                 //判断这个Item是否被选中
-                if(cart.isChecked()){
+                if (cart.isChecked()) {
                     //拿到这个cart对应的位置
                     int position = mListDatas.indexOf(cart);
                     //删除这个cart
@@ -178,14 +197,11 @@ public class CartAdapter extends BaseAdapter<ShoppingCart> {
     }
 
 
-
-
-
     /**
      * 设置Item数目改变的监听事件
      */
     public interface OnItemNumChangeListener {
-        void onResult(int value,ShoppingCart cart);
+        void onResult(int value, ShoppingCart cart);
     }
 
     /**
