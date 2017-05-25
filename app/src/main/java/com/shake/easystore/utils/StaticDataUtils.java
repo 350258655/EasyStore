@@ -15,8 +15,11 @@ public class StaticDataUtils {
     //存储购物车中 被选中的那些Cart
     private static List<ShoppingCart> mList;
 
-    private StaticDataUtils() {
+    //存储单个Cart
+    private static ShoppingCart mCart;
 
+
+    private StaticDataUtils() {
     }
 
 
@@ -50,6 +53,34 @@ public class StaticDataUtils {
     public static void clearShopCarts() {
         mList = null;
     }
+
+
+    /**
+     * 存储单个cart
+     *
+     * @param cart
+     */
+    public static void putShopCart(ShoppingCart cart) {
+        mCart = cart;
+    }
+
+    /**
+     * 获取单个Cart
+     *
+     * @return
+     */
+    public static ShoppingCart getShopCart() {
+        return mCart;
+    }
+
+    /**
+     * 清除Cart
+     */
+    public static void clearShopCart() {
+        mCart = null;
+    }
+
+
 
 
 }

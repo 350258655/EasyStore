@@ -138,7 +138,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             public void onClick(View v) {
 
                 //先判断有没有收货地址，有收货地址才能下单
-                if(!hasAddress){
+                if (!hasAddress) {
                     Toast.makeText(CreateOrderActivity.this, "请先添加收货地址！", Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -184,6 +184,12 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
         //从全局数据中获取
         List<ShoppingCart> carts = StaticDataUtils.getShopCarts();
+
+        //对数据进行判空处理，并且结束这个Activity
+        if(carts == null || carts.size() <= 0){
+            Toast.makeText(CreateOrderActivity.this, "请先添加要购买的商品!", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
         //从数据存储类中获取数据，并且提供给适配器。并且设置Adapter
         mAdapter = new WareOrderAdapter(this,carts);
@@ -397,10 +403,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     // 支付宝返回此次支付结果及加签，建议对支付宝签名信息拿签约时支付宝提供的公钥做验签
                     String resultInfo = payResult.getResult();
                     String resultStatus = payResult.getResultStatus();
-
                     // 判断resultStatus 为“9000”则代表支付成功，具体状态码代表含义可参考接口文档
                     if (TextUtils.equals(resultStatus, "9000")) {
-                        JSONObject resultJson = new JSONObject();
                         //支付宝成功支付成功返回
                         //TODO 回调结果
                         setResult(Contants.RESULT_SUCCESS);

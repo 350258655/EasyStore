@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.lidroid.xutils.view.annotation.ViewInject;
 import com.shake.easystore.Contants;
@@ -25,6 +26,7 @@ import com.shake.easystore.adapter.decoration.DividerItemDecoration;
 import com.shake.easystore.bean.ShoppingCart;
 import com.shake.easystore.http.OkHttpHelper;
 import com.shake.easystore.utils.CartProvider;
+import com.shake.easystore.utils.LocalDataUtils;
 import com.shake.easystore.utils.StaticDataUtils;
 import com.shake.easystore.weiget.ShopToolbar;
 
@@ -186,6 +188,16 @@ public class CartFragment extends BaseFragment {
                 //获取那些被选中的Cart，因为只支付这部分
                 List<ShoppingCart> list = mCartAdapter.getCheckCart();
 
+                //为这些商品添加编号
+                for (ShoppingCart cart : list) {
+                    cart.setOrderNum(String.valueOf(System.currentTimeMillis()));
+                }
+
+                if (list.size() <= 0 || list == null) {
+                    Toast.makeText(getContext(), "请先添加要购买的商品!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 //存储这部分Cart
                 StaticDataUtils.putShopCarts(list);
 
@@ -324,23 +336,40 @@ public class CartFragment extends BaseFragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        Log.i("TAG", "CartFragment，支付返回的请求码： " + requestCode + ",结果码：" + resultCode);
+
         //TODO 在这里，需要判断购物车中有哪些商品是已经下单了的，把这些下单的数据存到我的订单中，同时清除他们的信息
-        if(resultCode == Contants.REQUEST_CODE && resultCode == Contants.RESULT_SUCCESS){
-            //获取那些已经支付了的Cart
-            List<ShoppingCart> carts = StaticDataUtils.getShopCarts();
-            //先试下删除
+        if (requestCode == Contants.REQUEST_CODE && resultCode == Contants.RESULT_SUCCESS) {
+            //保存订单信息
+            saveOrder(Contants.SUCCESS_ORDER);
+            //删除购物车中的这些数据
             mCartAdapter.deleteCard();
-            //静态辅助类中要清空信息
-            StaticDataUtils.clearShopCarts();
 
-        //TODO 假如这些信息没有成功，就存储到取消的订单中
-        }else if(requestCode == Contants.REQUEST_CODE && requestCode == Contants.RESULT_CANCLE){
+            //TODO 假如这些信息没有成功，就存储到取消的订单中
+        } else if (requestCode == Contants.REQUEST_CODE && resultCode == Contants.RESULT_CANCLE) {
+            //保存订单信息
+            saveOrder(Contants.CANCLE_ORDER);
 
-        }else if(requestCode == Contants.REQUEST_CODE && requestCode == Contants.RESULT_CANCLE){
-
+        } else if (requestCode == Contants.REQUEST_CODE && resultCode == Contants.RESULT_FAILD) {
+            //保存订单信息
+            saveOrder(Contants.FAILD_ORDER);
         }
 
 
+    }
 
+    /**
+     * 保存订单信息
+     *
+     * @param state
+     */
+    private void saveOrder(String state) {
+        //获取那些已经支付了的Cart
+        List<ShoppingCart> carts = StaticDataUtils.getShopCarts();
+        //存储支付成功的那些Cart
+        LocalDataUtils utils = LocalDataUtils.getInstance(getContext());
+        utils.putCarts(carts, state);
+        //静态辅助类中要清空信息
+        StaticDataUtils.clearShopCarts();
     }
 }

@@ -6,7 +6,9 @@ package com.shake.easystore.bean;
  */
 public class ShoppingCart extends Wares {
     private int count;
-    private boolean isChecked=true;
+    private boolean isChecked = true;
+
+    private String orderNum;
 
     public int getCount() {
         return count;
@@ -22,5 +24,22 @@ public class ShoppingCart extends Wares {
 
     public void setIsChecked(boolean isChecked) {
         this.isChecked = isChecked;
+    }
+
+    /**
+     * 获取订单号
+     *
+     * @return
+     */
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    /**
+     * 设置订单号
+     * @param orderNum
+     */
+    public void setOrderNum(String orderNum){
+        this.orderNum = orderNum;
     }
 }

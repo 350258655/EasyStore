@@ -14,6 +14,7 @@ import com.lidroid.xutils.view.annotation.event.OnClick;
 import com.shake.easystore.AddressListActivity;
 import com.shake.easystore.Contants;
 import com.shake.easystore.LoginActivity;
+import com.shake.easystore.MyOrderActivity;
 import com.shake.easystore.R;
 import com.shake.easystore.bean.User;
 import com.shake.easystore.utils.UserLocalData;
@@ -76,7 +77,16 @@ public class MineFragment extends BaseFragment {
      */
     @OnClick(R.id.txt_my_address)
     public void toAddressActivity(View view) {
-        startActivity(new Intent(getContext(), AddressListActivity.class),true);
+        startActivity(new Intent(getContext(), AddressListActivity.class), true);
+    }
+    /**
+     * 点击我的订单，去到我的订单页面
+     *
+     * @param view
+     */
+    @OnClick(R.id.txt_my_orders)
+    public void toMyOrderActivity(View view) {
+        startActivity(new Intent(getContext(), MyOrderActivity.class),true);
     }
 
 

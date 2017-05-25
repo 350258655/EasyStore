@@ -17,6 +17,11 @@ public class Contants {
     public static final String BUNDLE_CHECK_CART="check_cart";
     public static final String CHECK_CART="isCheck";
 
+
+    public static final String SUCCESS_ORDER="success_order";
+    public static final String CANCLE_ORDER="cancle_order";
+    public static final String FAILD_ORDER="faild_order";
+
     public  static final int REQUEST_CODE=0;
     public  static final int REQUEST_EDIT_CODE=1;
 

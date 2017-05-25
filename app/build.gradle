@@ -42,4 +42,5 @@ dependencies {
     compile 'liji.library.dev:citypickerview:1.0.0'
     compile 'com.github.1em0nsOft:LemonHello4Android:1.0.1'
     compile files('libs/alipaysdk.jar')
+    compile 'com.w4lle.library:NineLayout:1.0.0'
 }

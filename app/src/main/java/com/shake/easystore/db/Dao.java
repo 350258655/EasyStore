@@ -252,7 +252,7 @@ public class Dao {
             String isDefault = cursor.getString(cursor.getColumnIndex("isDefault"));
             String detailAddress = cursor.getString(cursor.getColumnIndex("detailAddress"));
 
-            Log.i("TAG", "查询，ID是多少：" + id + ",名字是：" + name + ",是不是被选中的:" + isDefault);
+            Log.i("TAG", "Dao,查询，ID是多少：" + id + ",名字是：" + name + ",是不是被选中的:" + isDefault);
 
             //封装数据并且添加到集合中
             Address addressObject = new Address(String.valueOf(id), name, address, phone, detailAddress, Boolean.valueOf(isDefault));

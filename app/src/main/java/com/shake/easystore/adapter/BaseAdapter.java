@@ -2,7 +2,6 @@ package com.shake.easystore.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,10 +170,8 @@ public abstract class BaseAdapter<T> extends RecyclerView.Adapter<BaseViewHolder
         if (lists != null && lists.size() > 0) {
 
             int size = lists.size();
-            Log.i("TAG", "BaseAdapter,refreshData,集合的长度： "+size);
             //遍历添加数据
             for (int i = 0; i < size; i++) {
-                Log.i("TAG", "for循环中的size: "+size);
                 mListDatas.add(i,lists.get(i));
                 //更新对应的Item
                 notifyItemInserted(i);
